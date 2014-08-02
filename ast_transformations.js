@@ -19,7 +19,19 @@ var _isValidApplication = function(functionName, arguments) {
     return arguments.length == 2 &&
            arguments[0].type == 'int' &&
            arguments[1].type == 'int'
+  } else if (functionName == 'map') {
+    return arguments.length == 2 &&
+           arguments[0].type == 'functionName' &&
+           arguments[1].type == 'list'
+  } else if (functionName == '(+ 1)') {
+    return arguments.length == 1 &&
+           arguments[0].type == 'int'
+  } else if (functionName == ':') {
+    return arguments.length == 2 &&
+           arguments[1].type == 'list'
   }
+
+  return false;
 };
 
 window.ASTTransformations = {
