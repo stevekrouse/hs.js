@@ -29,9 +29,9 @@ var _isValidApplication = function(functionName, arguments) {
   } else if (functionName == ':') {
     return arguments.length == 2 &&
            arguments[1].type == 'list'
+  } else {
+    return false;
   }
-
-  return false;
 };
 
 window.ASTTransformations = {
