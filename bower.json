@@ -1,0 +1,19 @@
+{
+  "name": "hs.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/stevekrouse/hs.js",
+  "authors": [
+    "stevekrouse <skrouse@seas.upenn.edu>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.11.1"
+  }
+}
