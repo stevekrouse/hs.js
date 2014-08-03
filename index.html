@@ -19,7 +19,8 @@
     <script src="ast_transformations.js"></script>
     <script src="initial_ast.js"></script>
 
-
+    <!-- Parser -->
+    <script src="haskell-parser.js"></script>
 
     <!-- Functions -->
     <script src="functions/map.js"></script>
@@ -38,7 +39,8 @@
     var _globalState = {
       lines: [{ast: window.initialAST, clickedComputationId: null}],
       applicationHighlightId: null,
-      highlightedLineIndex: null
+      highlightedLineIndex: null,
+      editingFirstLine: false
     };
 
     var changeGlobalState = function(globalStateDiff) {
@@ -73,6 +75,21 @@
 
     window.highlightLine = function(index) {
       changeGlobalState({highlightedLineIndex: index});
+    };
+
+    window.editFirstLine = function() {
+      changeGlobalState({editingFirstLine: true});
+    };
+
+    window.updateInitialAST = function(id, subtree) {
+      var newAST = ASTTransformations.replaceSubtree(_globalState.lines[0].ast, id, subtree);
+
+      changeGlobalState({
+        lines: [{ast: newAST, clickedComputationId: null}],
+        applicationHighlightId: null,
+        highlightedLineIndex: null,
+        editingFirstLine: false
+      });
     };
   </script>
 </html>
