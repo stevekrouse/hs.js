@@ -117,6 +117,6 @@ window.ASTTransformations = {
 
     _.extend(subtree, newSubtree);
 
-    return newAST;
+    return {ast: newAST, justComputedId: newSubtree.id};
   }
 };

@@ -22,6 +22,7 @@
   cursor: pointer;
 }
 
-.application-highlight-clicked-computation {
+.application-highlight-clicked-computation,
+.node-highlight-just-computed {
   background: #ccc;
 }
