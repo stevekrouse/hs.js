@@ -32,6 +32,9 @@ pre {
   font-family: monospace;
   padding-top: 1em;
 }
+.line {
+  width: 80%;
+}
 
 .lines-edit {
   font-size: 1em;
@@ -111,4 +114,26 @@ input.input-error {
   color: #777;
   width: 175px;
   text-align: center;
+}
+
+.function-editor-link {
+  color: #777;
+  cursor: pointer;
+  text-decoration: underline;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+.function-editor {
+  position: fixed;
+  top: 20px;
+  right: 0;
+  height: 200px;
+  width: 20%;
+  font: 1em monospace;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.function-editor-error {
+  outline: 1px solid red;
 }

@@ -13,3 +13,5 @@ window.initialAST = {
     ]}
   ]
 };
+
+window.initialFunctionDefinitions = "double :: a -> a\ndouble x = x + x\n";
