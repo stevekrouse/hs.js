@@ -54,7 +54,7 @@
         <code class="mapInLesson">map</code> is a function that performs some operation on every element in a list.
       </div>
 
-      <pre><div class="mapLessonTypeSignature">map :: (a -> b) -> [a] -> [b]</div><div class="mapLessonBaseCase">map f [] = []</div><div class="mapLessonRecursiveCase">map f (x:xs) = f x : map f xs</div></pre>
+      <pre><div class="mapLessonTypeSignature"><code class="mapInLesson">map</code> :: (a -> b) -> [a] -> [b]</div><div class="mapLessonBaseCase"><code class="mapInLesson">map</code> f [] = []</div><div class="mapLessonRecursiveCase"><code class="mapInLesson">map</code> f (x:xs) = f x : <code class="mapInLesson">map</code> f xs</div></pre>
 
       <div class="mapLessonTypeSignature" >
         <span><code class="mapInLesson">map</code> takes 2 inputs</span>
@@ -78,8 +78,9 @@
            The recursive-case pattern matches on the first list element <code> x </code> and returns <code>(f x) : map f xs</code>.
          </div>
       </div>
+      <div id="mapLines"></div>
     </div>
-    <div id="mapLines"></div>
+
 
     <div id="foldlesson" style="margin-top: 10px">
       <div style="margin-bottom:5px">
@@ -89,38 +90,74 @@
         <span> <code class="foldInLesson">fold</code> describes 2 functions that  "summarize" the elements in a list.</span>
         <ul style="padding-left: 30px;margin-top: 5px;">
           <li><code class="foldrInLesson">foldr</code> - something about foldr</li>
-          <li><code class="foldrInLesson">foldl</code> - something about foldl</li>
+          <li><code class="foldlInLesson">foldl</code> - something about foldl</li>
         </ul>
       </div>
 
+     <!-- FOLDR -->
+      <div id="foldrLesson">
+        <div style="margin-bottom:5px; margin-top:10px;">
+          <code class="foldrInLesson" style="font-size:1.3em; font-weight:bold; margin-bottom:10px">foldr</code>
+        </div>
+        <pre><div class="foldrLessonTypeSignature"><code class="foldrInLesson">foldr</code> :: (a -> b -> a) -> a -> [b] -> a</div><div class="foldrLessonBaseCase"><code class="foldrInLesson">foldr</code> f i [] = i</div><div class="foldrLessonRecursiveCase"><code class="foldrInLesson">foldr</code> f i (x:xs) = f (<code class="foldrInLesson">foldr</code> f i xs) x</div></pre>
 
-      <div style="margin-bottom:5px; margin-top:10px;">
-        <code class="foldInLesson" style="font-size:1.3em; font-weight:bold; margin-bottom:10px">foldr</code>
-      </div>
-      <pre><div class="foldrLessonTypeSignature">foldl :: (a -> b -> a) -> a -> [b] -> a</div><div class="foldrLessonBaseCase">foldl f i [] = i</div><div class="foldrLessonRecursiveCase">foldl f i (x:xs) = f (foldl f i xs) x</div></pre>
-
-      <div class="foldrLessonTypeSignature" >
-        <span><code class="foldrInLesson">foldr</code> takes 2 inputs</span>
+        <div class="foldrLessonTypeSignature" >
+          <span><code class="foldrInLesson">foldr</code> takes 2 inputs</span>
           <ul style="padding-left: 30px;margin-top: 5px;">
-            <li>function of type <code>(a -> b)</code></li>
-            <li>list of type <code>[a]</code></li>
+            <li>function of type <code>(a -> b -> a)</code></li>
+            <li>initial value of type <code>a</code></li>
+            <li>list of type <code>[b]</code></li>
           </ul>
           <span>and returns</span>
           <ul style="padding-left: 30px;margin-top: 5px;">
             <li>list of type <code>[b]</code></li>
           </ul>
-
-      </div>
-
-      <div class="foldrLessonPatternMatches" style="padding-top: 10px;">
-        <div class="foldrLessonBaseCase">
-          The base-case of <code class="foldrInLesson">foldr</code> pattern matches on <code>[]</code> and returns <code>[]</code>.
         </div>
-       </br>
-        <div  class="foldrLessonRecursiveCase">
-           The recursive-case pattern matches on the first list element (<code> x </code>) and returns <code>(f x) : map f xs</code>.
-         </div>
+
+        <div class="foldrLessonPatternMatches" style="padding-top: 10px;">
+          <div class="foldrLessonBaseCase">
+            The base-case of <code class="foldrInLesson">foldr</code> pattern matches on <code>[]</code> and returns <code>[]</code>.
+          </div>
+          </br>
+          <div class="foldrLessonRecursiveCase">
+            The recursive-case pattern matches on the first list element <code> x </code> and returns <code>f (<code class="foldrInLesson">foldr</code> f i xs) x</code>.
+          </div>
+        </div>
+        <div id="foldrLines"></div>
       </div>
+
+      <!-- FOLDL -->
+       <div id="foldlLesson">
+         <div style="margin-bottom:5px; margin-top:10px;">
+           <code class="foldlInLesson" style="font-size:1.3em; font-weight:bold; margin-bottom:10px">foldl</code>
+         </div>
+         <pre><div class="foldlLessonTypeSignature"><code class="foldlInLesson">foldl</code> :: (a -> b -> a) -> a -> [b] -> a</div><div class="foldlLessonBaseCase"><code class="foldlInLesson">foldl</code> f i [] = i</div><div class="foldlLessonRecursiveCase"><code class="foldlInLesson">foldl</code> f i (x:xs) = f (<code class="foldlInLesson">foldl</code> f i xs) x</div></pre>
+
+         <div class="foldlLessonTypeSignature" >
+           <span><code class="foldlInLesson">foldl</code> takes 2 inputs</span>
+           <ul style="padding-left: 30px;margin-top: 5px;">
+             <li>function of type <code>(a -> b -> a)</code></li>
+             <li>initial value of type <code>a</code></li>
+             <li>list of type <code>[b]</code></li>
+           </ul>
+           <span>and returns</span>
+           <ul style="padding-left: 30px;margin-top: 5px;">
+             <li>list of type <code>[b]</code></li>
+           </ul>
+         </div>
+
+         <div class="foldlLessonPatternMatches" style="padding-top: 10px;">
+           <div class="foldlLessonBaseCase">
+             The base-case of <code class="foldlInLesson">foldl</code> pattern matches on <code>[]</code> and returns <code>[]</code>.
+           </div>
+           </br>
+           <div class="foldrLessonRecursiveCase">
+             The recursive-case pattern matches on the first list element <code> x </code> and returns <code>f i (<code class="foldlInLesson">foldl</code> f i xs)</code>.
+           </div>
+         </div>
+         <div id="foldrLines"></div>
+       </div>
+
     </div>
   </body>
   <script>
@@ -147,6 +184,16 @@
     React.renderComponent(
       HaskellJSProgram({defaultValue: 'map addOne [1 2 3 4 5]'}),
       document.getElementById('mapLines')
+    );
+
+    React.renderComponent(
+      HaskellJSProgram({defaultValue: 'foldr plus 0 [1 2 3 4 5]'}),
+      document.getElementById('foldrLines')
+    );
+
+    React.renderComponent(
+      HaskellJSProgram({defaultValue: 'foldl plus 0 [1 2 3 4 5]'}),
+      document.getElementById('foldlLines')
     );
 
     React.renderComponent(
