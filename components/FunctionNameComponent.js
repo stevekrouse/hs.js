@@ -7,10 +7,13 @@ var FunctionName = React.createClass({displayName: 'FunctionName',
 
     if (functionName === "map"){
       var color = 'red';
-    } else if (functionName.indexOf("fold") >= 0){
-      var color = 'blue';
-    } else {
-      var color = func ? func.color : 'black';
+    } else if (functionName === "foldl"){
+      var color = 'green';
+    } else if (functionName === "foldr"){
+      var color = 'rgb(255, 100, 224)';
+    }
+    else {
+      var color = func ? func.color : 'gray';
     }
 
     return React.DOM.span({className: "functionName", style: {color: color}, key: this.currentAST().id},

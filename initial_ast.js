@@ -2,9 +2,13 @@ window.initialFunctionDefinitions = "map :: (a -> b) -> [a] -> [b]"            +
                                     "map f []     = []"                        + "\n" +
                                     "map f (x:xs) = (f x) : map f xs"          + "\n" +
                                     ""                                         + "\n" +
-                                    "fold :: (a -> b) -> b -> [a] -> [b]"      + "\n" +
-                                    "fold f i []     = i"                      + "\n" +
-                                    "fold f i (x:xs) = f x (fold f i xs)"      + "\n" +
+                                    "foldl :: (a -> b -> a) -> a -> [b] -> a"  + "\n" +
+                                    "foldl f i []     = i"                     + "\n" +
+                                    "foldl f i (x:xs) = f (foldl f i xs) x"    + "\n" +
+                                    ""                                         + "\n" +
+                                    "foldr :: (a -> b -> b) -> b -> [a] -> b"  + "\n" +
+                                    "foldr f i []     = i"                     + "\n" +
+                                    "foldr f i (x:xs) = f x (foldr f i xs)"    + "\n" +
                                     ""                                         + "\n" +
                                     "plus :: Int -> Int -> Int"                + "\n" +
                                     "plus x y = x + y"                         + "\n" +
