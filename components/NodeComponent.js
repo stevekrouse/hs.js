@@ -4,13 +4,13 @@ var Node = React.createClass({displayName: 'Node',
     currentAST = this.currentAST();
 
     if (currentAST.type == "application") {
-      return Application({ast: this.props.ast, id: currentAST.id});
+      return Application({lineState: this.props.lineState, id: currentAST.id});
     } else if (currentAST.type == "functionName") {
-      return FunctionName({ast: this.props.ast, id: currentAST.id});
+      return FunctionName({lineState: this.props.lineState, id: currentAST.id});
     } else if (currentAST.type == "list") {
-      return List({ast: this.props.ast, id: currentAST.id});
+      return List({lineState: this.props.lineState, id: currentAST.id});
     } else if (currentAST.type == "int") {
-      return Int({ast: this.props.ast, id: currentAST.id});
+      return Int({lineState: this.props.lineState, id: currentAST.id});
     } else {
        return React.DOM.span({}, "cannot handle ast of this type");
     }

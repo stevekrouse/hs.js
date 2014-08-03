@@ -1,7 +1,8 @@
 var Application = React.createClass({displayName: 'Application',
   mixins: [NodeMixins],
   isApplicable: function() {
-    return ASTTransformations.isApplicable(this.currentAST());
+    return this.props.lineState.index === this.props.lineState.lastIndex &&
+           ASTTransformations.isApplicable(this.currentAST());
   },
   apply: function() {
     if (this.isApplicable()) {
@@ -11,13 +12,12 @@ var Application = React.createClass({displayName: 'Application',
   render: function() {
     var currentAST = this.currentAST();
 
-    var ast = this.props.ast;
-    var funcAndArgs = currentAST.arguments.map(function(arg){
-      return Node({ast: ast, id: arg.id});
-    });
+    var funcAndArgs = currentAST.arguments.map((function(arg){
+      return Node({lineState: this.props.lineState, id: arg.id});
+    }).bind(this));
 
     indexToAddFunction = currentAST.functionName.infix ? 1 : 0;
-    funcAndArgs.splice(indexToAddFunction, 0, FunctionName({ast: this.props.ast, id: currentAST.functionName.id}));
+    funcAndArgs.splice(indexToAddFunction, 0, FunctionName({lineState: this.props.lineState, id: currentAST.functionName.id}));
 
     funcAndArgs.unshift('(');
     funcAndArgs.push(')');

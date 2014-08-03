@@ -1,5 +1,5 @@
 NodeMixins = {
   currentAST: function(){
-    return ASTTransformations.subtreeById(this.props.ast, this.props.id);
+    return ASTTransformations.subtreeById(this.props.lineState.ast, this.props.id);
   }
 }
