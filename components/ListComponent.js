@@ -1,9 +1,10 @@
 var List = React.createClass({displayName: 'List',
   mixins: [NodeMixins],
   getInitialState: function() {
-    return {editingError: false};
+    return {editingError: false, textLength: null};
   },
   onTextChange: function(event) {
+    this.setState({textLength: event.target.value.length});
     try {
       HaskellParser.parse(event.target.value);
       this.setState({editingError: false});
@@ -29,7 +30,8 @@ var List = React.createClass({displayName: 'List',
         onClick: function(event){event.stopPropagation();},
         onChange: this.onTextChange,
         onKeyDown: this.onKeyDown,
-        className: (this.state.editingError ? 'input-error' : '')
+        className: (this.state.editingError ? 'input-error' : ''),
+        style: {width: Math.max(100, (this.state.textLength || listText.length)*8)}
       });
     } else {
       items = this.currentAST().items.map((function(item){

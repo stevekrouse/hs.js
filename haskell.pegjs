@@ -3,26 +3,27 @@
 }
 
 start
-  = expression
+  = expressionWithFunction
 
 expression
-  = "(" whitespace? exp:expressionWithInfix whitespace? ")" { return exp; }
+  = "(" whitespace? exp:expressionWithFunction whitespace? ")" { return exp; }
   / list
-  / functionApplication
   / integer
+  / functionName
 
-expressionWithInfix
+expressionWithFunction
   = infixFunctionApplication
+  / functionApplication
   / expression
 
 functionApplication
   = f:functionName whitespace args:expression_list {return {functionName: f, type: 'application', id: randomId(), arguments: args}};
 
 infixFunctionApplication
-  = left:expression whitespace f:infixFunctionName whitespace right:expressionWithInfix { return {id: randomId(), functionName: f, type: "application", arguments: [left, right]}}
+  = left:expression whitespace f:infixFunctionName whitespace right:expressionWithFunction { return {id: randomId(), functionName: f, type: "application", arguments: [left, right]}}
 
 list
-  = "[" whitespace? list:expression_list? whitespace? "]" { return { id: randomId(), type: "list", items: list }; }
+  = "[" whitespace? list:expression_list? whitespace? "]" { return { id: randomId(), type: "list", items: list || [] }; }
 
 expression_list
   = exp1:expression list:(whitespace_expression)* { list.unshift(exp1); return list; }

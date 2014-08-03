@@ -45,7 +45,8 @@
       lines: [{ast: window.initialAST, clickedComputationId: null}],
       applicationHighlightId: null,
       highlightedLineIndex: null,
-      editingFirstLine: false
+      editingFirstLine: false,
+      showHelpText: true
     };
 
     var changeGlobalState = function(globalStateDiff) {
@@ -71,7 +72,7 @@
         justComputedId: applyInfo.justComputedId
       });
 
-      changeGlobalState({lines: lines});
+      changeGlobalState({lines: lines, showHelpText: false});
     };
 
     window.highlightApplicationId = function(id) {
@@ -93,7 +94,8 @@
         lines: [{ast: newAST, clickedComputationId: null}],
         applicationHighlightId: null,
         highlightedLineIndex: null,
-        editingFirstLine: false
+        editingFirstLine: false,
+        showHelpText: false
       });
     };
   </script>

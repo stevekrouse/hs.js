@@ -1,0 +1,15 @@
+{
+  "name": "pegjs",
+  "homepage": "https://github.com/dmajda/pegjs",
+  "version": "0.8.0",
+  "_release": "0.8.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.8.0",
+    "commit": "2263a3003498bfee5c42c507c67306f9f87b2b30"
+  },
+  "_source": "git://github.com/dmajda/pegjs.git",
+  "_target": "~0.8.0",
+  "_originalSource": "pegjs",
+  "_direct": true
+}

@@ -1,0 +1,14 @@
+{
+  "curly":    true,
+  "eqeqeq":   true,
+  "evil":     true,
+  "forin":    true,
+  "freeze":   true,
+  "immed":    true,
+  "latedef":  "nofunc",
+  "laxbreak": true,
+  "noarg":    true,
+  "noempty":  true,
+  "nonew":    true,
+  "trailing": true
+}

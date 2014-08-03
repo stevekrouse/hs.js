@@ -79,3 +79,11 @@ input {
 input.input-error {
   outline: 1px solid red;
 }
+
+.help-text {
+  font: 0.7em Helvetica, sans-serif;
+  margin-top: 0.5em;
+  color: #777;
+  width: 175px;
+  text-align: center;
+}
