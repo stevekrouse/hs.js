@@ -1,7 +1,7 @@
 window.functions['map'] = {
   name: 'map',
   englishName: 'map',
-  color: 'brown',
+  color: 'rgb(253, 46, 46)',
   infix: false,
   typeSignature: '(a -> b) -> [a] -> [b]',
   isValidApplication: function(arguments) {
