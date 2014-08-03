@@ -13,6 +13,10 @@
   font-family: monospace;
 }
 
+.line-highlight {
+  background: #eee;
+}
+
 .application-applicable:hover {
   background: yellow;
   cursor: pointer;

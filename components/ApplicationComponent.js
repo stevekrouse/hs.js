@@ -35,7 +35,7 @@ var Application = React.createClass({displayName: 'Application',
     funcAndArgs.push(')');
 
     var className = 'application';
-    if (this.currentAST().id === this.props.lineState.applicationHighlightId) {
+    if (this.isApplicable() && this.currentAST().id === this.props.lineState.applicationHighlightId) {
       className += ' application-applicable';
     }
 
