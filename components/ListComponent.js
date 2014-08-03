@@ -24,12 +24,8 @@ var List = React.createClass({displayName: 'List',
   },
   render: function() {
     if (this.props.lineState.editing) {
-      var listText = '[' + this.currentAST().items.map(function(item){
-        return item.value;
-      }).join(' ') + ']';
-
       return React.DOM.input({
-        defaultValue: listText,
+        defaultValue: window.ASTTransformations.astToString(this.currentAST()),
         onClick: function(event){event.stopPropagation();},
         onChange: this.onTextChange,
         onKeyDown: this.onKeyDown,
