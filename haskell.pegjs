@@ -24,7 +24,10 @@ functionDefinitionTypeSignature
   = whitespace "::" whitespace typesig:[ \(\)\[\]A-Za-z>-]+ { return typesig.join(""); }
 
 functionDefinitionPatternLine
-  = whitespace_newline functionName patternArguments:patternWithWhitespace* whitespace? "=" whitespace exp:expressionWithFunction { return {
+  = whitespace_newline functionName part:functionDefinitionPatternPartOfLine { return part; }
+
+functionDefinitionPatternPartOfLine
+  = patternArguments:patternWithWhitespace* whitespace? "=" whitespace exp:expressionWithFunction { return {
     definitionLine: text(),
     numberOfArguments: patternArguments.length,
     doesMatch: function(args) {
