@@ -4,9 +4,21 @@ var Application = React.createClass({displayName: 'Application',
     return this.props.lineState.index === this.props.lineState.lastIndex &&
            ASTTransformations.isApplicable(this.currentAST());
   },
-  apply: function() {
+  apply: function(event) {
     if (this.isApplicable()) {
       window.addLineByApplying(this.currentAST().id);
+      event.stopPropagation();
+    }
+  },
+  highlight: function() {
+    if (this.isApplicable()) {
+      this.previousHighlightApplicationId = this.props.lineState.applicationHighlightId;
+      window.highlightApplicationId(this.currentAST().id);
+    }
+  },
+  unhighlight: function() {
+    if (this.currentAST().id === this.props.lineState.applicationHighlightId) {
+      window.highlightApplicationId(this.previousHighlightApplicationId);
     }
   },
   render: function() {
@@ -23,9 +35,16 @@ var Application = React.createClass({displayName: 'Application',
     funcAndArgs.push(')');
 
     var className = 'application';
-    if (this.isApplicable()) className += ' application-applicable';
+    if (this.currentAST().id === this.props.lineState.applicationHighlightId) {
+      className += ' application-applicable';
+    }
 
-    return React.DOM.span({className: className, onClick: this.apply},
+    return React.DOM.span({
+      className: className,
+      onClick: this.apply,
+      onMouseEnter: this.highlight,
+      onMouseLeave: this.unhighlight
+    },
       funcAndArgs
     );
   }

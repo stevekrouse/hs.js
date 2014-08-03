@@ -6,7 +6,8 @@ var Lines = React.createClass({displayName: 'Lines',
           return Line({lineState: {
             ast: ast,
             index: index,
-            lastIndex: this.props.ASTs.length-1
+            lastIndex: this.props.ASTs.length-1,
+            applicationHighlightId: this.props.applicationHighlightId
           }});
         }).bind(this))
       )
