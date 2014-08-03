@@ -21,11 +21,19 @@
     </div>
   </body>
   <script>
-    initial_state = {ASTs: [window.initialAST]}
-    React.renderComponent(
-      Lines(initial_state),
-      document.getElementById('lines')
-    );
+    var ASTs = [window.initialAST];
+    var renderLines = function() {
+      React.renderComponent(
+        Lines({ASTs: ASTs}),
+        document.getElementById('lines')
+      );
+    };
+    renderLines();
+
+    window.addLineByApplying = function(id) {
+      ASTs.push(ASTTransformations.applyFunction(ASTs[ASTs.length-1], id));
+      renderLines();
+    };
   </script>
 </html>
 

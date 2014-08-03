@@ -3,6 +3,11 @@ var Application = React.createClass({displayName: 'Application',
   isApplicable: function() {
     return ASTTransformations.isApplicable(this.currentAST());
   },
+  apply: function() {
+    if (this.isApplicable()) {
+      window.addLineByApplying(this.props.ast.id);
+    }
+  },
   render: function() {
     var ast = this.props.ast;
     var funcAndArgs = this.currentAST().arguments.map(function(arg){
@@ -16,7 +21,7 @@ var Application = React.createClass({displayName: 'Application',
     var className = 'application';
     if (this.isApplicable()) className += ' application-applicable';
 
-    return React.DOM.div({className: className},
+    return React.DOM.span({className: className, onClick: this.apply},
       funcAndArgs
     );
   }
