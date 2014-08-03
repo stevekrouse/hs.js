@@ -1,3 +1,8 @@
+var newFunctions = HaskellParser.parse(initialFunctionDefinitions + "\n\n", {startRule: 'functionDefinitionList'});
+newFunctions.forEach(function(func) {
+    window.functions[func.name] = func;
+});
+
 var stripIds = function(AST) {
   delete AST.id;
   var keys = Object.keys(AST)
@@ -112,11 +117,11 @@ describe('ASTTransformations', function() {
       chai.expect(ASTTransformations.isApplicable(AST)).to.be.true;
     });
 
-    it('allows applying "(+ 1) 1"', function() {
+    it('allows applying "addOne 1"', function() {
       var AST = {
         id: 1,
         type: "application",
-        functionName: {id: 2, type: "functionName", name: "(+ 1)"},
+        functionName: {id: 2, type: "functionName", name: "addOne"},
         arguments: [
           {id: 3, type: "int", value: 1}
         ]
@@ -139,19 +144,6 @@ describe('ASTTransformations', function() {
   });
 
   describe('applyFunction', function() {
-    it('computes "(+ 1) 1" => "2"', function() {
-      var ASTbefore = {
-        id: 1,
-        type: "application",
-        functionName: {id: 2, type: "functionName", name: "(+ 1)"},
-        arguments: [
-          {id: 3, type: "int", value: 1}
-        ]
-      };
-      var ASTafter = {type: "int", value: 2};
-      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id)).ast).to.deep.equal(ASTafter);
-    });
-
     it('computes "1 + 1" => "2"', function() {
       var ASTbefore = {
         id: 1,
@@ -176,7 +168,7 @@ describe('ASTTransformations', function() {
           {id: 4, type: "list", items: []}
         ]
       };
-      var ASTafter = {type: "list", items: []}
+      var ASTafter = {type: "list", items: []};
       chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id)).ast).to.deep.equal(ASTafter);
     });
 
@@ -193,17 +185,17 @@ describe('ASTTransformations', function() {
         ]
       };
       var ASTafter = {
-        type: "application",
         functionName: {type: "functionName", name: ":", infix: true},
+        type: "application",
         arguments: [
           {
-            type: "application",
             functionName: {type: "functionName", name: "f"},
+            type: "application",
             arguments: [{type: "int", value: 1}]
           },
           {
+            functionName: {type: "functionName", name: "map", infix: false},
             type: "application",
-            functionName: {type: "functionName", name: "map"},
             arguments: [
               {type: "functionName", name: "f"},
               {type: "list", items: []}
@@ -244,11 +236,11 @@ describe('ASTTransformations', function() {
         type: "application",
         functionName: {id: 2, type: "functionName", name: "map"},
         arguments: [
-          {id: 3, type: "functionName", name: "(+ 1)"},
+          {id: 3, type: "functionName", name: "addOne"},
           {id: 4, type: 'list', items: []}
         ]
       };
-      var contextHTML = "<em>map</em> :: (a -> b) -> [a] -> [b]<br><em>map</em> f [] = []";
+      var contextHTML = "<em>map</em> :: (a -> b) -> [a] -> [b]<br><em>map</em>  f []     = []";
       chai.expect(ASTTransformations.getContextHTML(AST, AST.id)).to.equal(contextHTML);
     });
   });

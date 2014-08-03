@@ -75,10 +75,10 @@ whitespace_expression
 
 functionName
   = letters:[A-Za-z]+ { return {id: randomId(), type: 'functionName', name: letters.join(""), infix: false}; }
-  / "(+ 1)" { return {id: randomId(), type: 'functionName', name: '(+ 1)', infix: false}; }
 
 infixFunctionName
   = "+" { return {id: randomId(), type: 'functionName', name: '+', infix: true}; }
+  / "-" { return {id: randomId(), type: 'functionName', name: '-', infix: true}; }
   / ":" { return {id: randomId(), type: 'functionName', name: ':', infix: true}; }
 
 integer
