@@ -1,12 +1,11 @@
 var HaskellJSProgram = React.createClass({displayName: 'HaskellJSProgram',
   getInitialState: function() {
     return {
-      lines: [{ast: window.initialAST, clickedComputationId: null}],
+      lines: [{ast: HaskellParser.parse(this.props.defaultValue), clickedComputationId: null}],
       applicationHighlightId: null,
       highlightedLineIndex: null,
       editingFirstLine: false,
-      showHelpText: true,
-      functionDefinitions: ''
+      showHelpText: true
     };
   },
 
@@ -50,29 +49,7 @@ var HaskellJSProgram = React.createClass({displayName: 'HaskellJSProgram',
     });
   },
 
-  updateFunctionDefinitions: function(text) {
-    this.setState({functionDefinitions: text});
-
-    window.functions = {
-      ':': window.functions[':'],
-      '+': window.functions['+'],
-      '(+ 1)': window.functions['(+ 1)'],
-      map: window.functions.map,
-    };
-
-    var newFunctions = HaskellParser.parse(text + "\n\n", {startRule: 'functionDefinitionList'});
-    newFunctions.forEach(function(func) {
-      if ([':', '+', '(+ 1)', 'map'].indexOf(func.name) < 0) {
-        window.functions[func.name] = func;
-      }
-    });
-  },
-
   render: function() {
     return Lines(_.extend({}, this.state, {program: this}));
-  },
-
-  componentDidMount: function() {
-    this.updateFunctionDefinitions(window.initialFunctionDefinitions);
   }
 });

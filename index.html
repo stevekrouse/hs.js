@@ -41,6 +41,8 @@
     <link rel="stylesheet" href="app.css">
   </head>
   <body>
+    <div id="function-editor"></div>
+
     <div id="title">
       <h1 style="font-size:1.5em; margin-bottom:0px;">haskell.js</h1>
       <h2 style="font-size:1em; color: gray; margin-top:0px;">Learn pattern-matching, first-class functions, and asbtracting over recursion.</h2>
@@ -80,8 +82,7 @@
 
     <hr>
 
-    <div id="lines">
-    </div>
+    <div id="lines"></div>
   </body>
   <script>
     var toggleLessonHighlight = function(e) {
@@ -105,8 +106,13 @@
     }
 
     React.renderComponent(
-      HaskellJSProgram(),
+      HaskellJSProgram({defaultValue: 'map addOne [1 2 3 4 5]'}),
       document.getElementById('lines')
+    );
+
+    React.renderComponent(
+      FunctionEditor({defaultFunctionDefinitions: window.initialFunctionDefinitions}),
+      document.getElementById('function-editor')
     );
   </script>
 </html>
