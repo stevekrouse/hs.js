@@ -9,12 +9,16 @@ var Application = React.createClass({displayName: 'Application',
     }
   },
   render: function() {
+    var currentAST = this.currentAST();
+
     var ast = this.props.ast;
-    var funcAndArgs = this.currentAST().arguments.map(function(arg){
+    var funcAndArgs = currentAST.arguments.map(function(arg){
       return Node({ast: ast, id: arg.id});
     });
 
-    funcAndArgs.unshift(FunctionName({ast: this.props.ast, id: this.currentAST().functionName.id}));
+    indexToAddFunction = currentAST.functionName.infix ? 1 : 0;
+    funcAndArgs.splice(indexToAddFunction, 0, FunctionName({ast: this.props.ast, id: currentAST.functionName.id}));
+
     funcAndArgs.unshift('(');
     funcAndArgs.push(')');
 
