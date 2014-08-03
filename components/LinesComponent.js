@@ -7,7 +7,8 @@ var Lines = React.createClass({displayName: 'Lines',
             ast: ast,
             index: index,
             lastIndex: this.props.ASTs.length-1,
-            applicationHighlightId: this.props.applicationHighlightId
+            applicationHighlightId: this.props.applicationHighlightId,
+            highlightedLineIndex: this.props.highlightedLineIndex
           }});
         }).bind(this))
       )

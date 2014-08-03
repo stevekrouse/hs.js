@@ -23,7 +23,8 @@
   <script>
     var _globalState = {
       ASTs: [window.initialAST],
-      applicationHighlightId: null
+      applicationHighlightId: null,
+      highlightedLineIndex: null
     };
 
     var changeGlobalState = function(globalStateDiff) {
@@ -45,8 +46,9 @@
     window.highlightApplicationId = function(id) {
       changeGlobalState({applicationHighlightId: id});
     };
+
+    window.highlightLine = function(index) {
+      changeGlobalState({highlightedLineIndex: index});
+    };
   </script>
 </html>
-
-
-
