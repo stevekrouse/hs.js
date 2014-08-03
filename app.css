@@ -121,14 +121,14 @@ input.input-error {
   cursor: pointer;
   text-decoration: underline;
   position: fixed;
-  top: 0;
-  right: 0;
+  top: 5px;
+  right: 10px;
 }
 .function-editor {
   position: fixed;
-  top: 20px;
-  right: 0;
-  height: 200px;
+  top: 30px;
+  right: 10px;
+  height: 300px;
   width: 20%;
   font: 1em monospace;
   border: 1px solid #ccc;
