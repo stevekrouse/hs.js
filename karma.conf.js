@@ -2,7 +2,8 @@ module.exports = function(config) {
   config.set({
     frameworks: ['mocha', 'chai'],
     files: [
-      'bower_components/underscore/underscore.js',
+      'bower_components/lodash/dist/lodash.js',
+      'bower_components/node-uuid/uuid.js',
       'ast_transformations.js',
       '*_spec.js'
     ],
