@@ -2,6 +2,18 @@ body {
   font-family: 'Optima', 'Arial', 'Helvetica', 'sans-serif';
 }
 
+pre {
+  margin-left: 30px;
+}
+
+.mapInLesson {
+  color: rgb(253, 46, 46);
+}
+
+#mapLesson {
+  font-size: 15px;
+}
+
 .map-lesson-highlight {
    background: rgb(228, 246, 255);
 }
@@ -19,10 +31,10 @@ body {
 .lines {
   font-family: monospace;
   padding-top: 1em;
-  max-width: 1000px;
 }
 
 .lines-edit {
+  font-size: 1em;
   color: #777;
   margin-left: 1em;
   display: none;
@@ -33,6 +45,10 @@ body {
   display: inline;
 }
 
+.line.span {
+  font-size: 23px;
+}
+
 .line-highlight {
   background: #fee;
 }
@@ -40,6 +56,7 @@ body {
   position: relative;
 }
 .line-context {
+  font-size: 1em;
   position: absolute;
   bottom: 0;
   right: 0px;
