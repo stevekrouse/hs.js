@@ -60,14 +60,14 @@
       <pre><div class="mapLessonTypeSignature">map :: (a -> b) -> [a] -> [b]</div><div class="mapLessonBaseCase">map f [] = []</div><div class="mapLessonRecursiveCase">map f (x:xs) = f x : map f xs</div></pre>
 
       <div class="mapLessonTypeSignature" >
-        <span><code class="mapInLesson">map</code> takes two inputs</span>
+        <span><code class="mapInLesson">map</code> takes 2 inputs</span>
           <ul style="padding-left: 30px;margin-top: 5px;">
-            <li>a function of type <code>(a -> b)</code></li>
-            <li>a list of type <code>[a]</code></li>
+            <li>function of type <code>(a -> b)</code></li>
+            <li>list of type <code>[a]</code></li>
           </ul>
           <span>and returns</span>
           <ul style="padding-left: 30px;margin-top: 5px;">
-            <li>a list of type <code>[b]</code></li>
+            <li>list of type <code>[b]</code></li>
           </ul>
 
       </div>
@@ -78,7 +78,7 @@
         </div>
        </br>
         <div  class="mapLessonRecursiveCase">
-           The recursive-case pattern matches on the first element (<code>x</code>) and returns <code>(f x) : map f xs</code>.
+           The recursive-case pattern matches on the first list element (<code> x </code>) and returns <code>(f x) : map f xs</code>.
          </div>
       </div>
     </div>
