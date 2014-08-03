@@ -38,7 +38,7 @@ var _applyFunction = function(node) {
       value: node.arguments[0].value + 1
     };
   } else if (node.functionName.name === 'map') {
-    if (node.arguments[1].items.length === 0) {
+    if (node.arguments[1].items.length === 0) {  // grab this for now, abstract later
       return {id: uuid.v4(), type: 'list', items: []}
     }
 
