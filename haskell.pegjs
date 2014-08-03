@@ -12,7 +12,7 @@ functionDefinitionPlusWhitespace
   = functionDefinition:functionDefinition whitespace_newline { return functionDefinition; }
 
 functionDefinition
-  = functionName:functionName typeSignature:functionDefinitionTypeSignature whitespace_newline patterns:(functionDefinitionPatternLine)+ { return {
+  = functionName:functionName typeSignature:functionDefinitionTypeSignature patterns:functionDefinitionPatternLine+ { return {
     name: functionName.name,
     englishName: functionName.name,
     typeSignature: typeSignature,
@@ -21,18 +21,28 @@ functionDefinition
   }}; }
 
 functionDefinitionTypeSignature
-  = whitespace "::" whitespace typesig:[ A-Za-z>-]+ { return typesig.join(""); }
+  = whitespace "::" whitespace typesig:[ \(\)\[\]A-Za-z>-]+ { return typesig.join(""); }
 
 functionDefinitionPatternLine
-  = functionName patternArguments:functionNameWithWhitespace* whitespace? "=" whitespace exp:expressionWithFunction { return {
+  = whitespace_newline functionName patternArguments:patternWithWhitespace* whitespace? "=" whitespace exp:expressionWithFunction { return {
     definitionLine: text(),
     numberOfArguments: patternArguments.length,
-    doesMatch: function() { return true; },
+    doesMatch: function(args) {
+      for (var i=0; i<patternArguments.length; i++) {
+        if(patternArguments[i].doesMatch && !patternArguments[i].doesMatch(args[i])) return false;
+      }
+      return true;
+    },
     apply: function(functionArguments) { return ASTTransformations.fillInArguments(exp, patternArguments, functionArguments); }
   }; }
 
-functionNameWithWhitespace
-  = whitespace functionName:functionName { return functionName; }
+patternWithWhitespace
+  = whitespace pattern:pattern { return pattern; }
+
+pattern
+  = "[" whitespace* "]" { return {id: randomId(), type: "emptyListPattern", doesMatch: function(arg) { return arg.type === "list" && arg.items.length === 0; } }; }
+  / "(" left:functionName ":" right:functionName ")" { return {id: randomId(), type: "listPattern", left: left, right: right, doesMatch: function(arg) { return arg.type === "list" && arg.items.length > 0 } }; }
+  / functionName
 
 expression
   = "(" whitespace? exp:expressionWithFunction whitespace? ")" { return exp; }
@@ -66,6 +76,7 @@ functionName
 
 infixFunctionName
   = "+" { return {id: randomId(), type: 'functionName', name: '+', infix: true}; }
+  / ":" { return {id: randomId(), type: 'functionName', name: ':', infix: true}; }
 
 integer
   = digits:[0-9]+ { return { id: randomId(), type: "int", value: parseInt(digits.join(""), 10)} ; }
