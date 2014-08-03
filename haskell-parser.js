@@ -736,10 +736,16 @@ HaskellParser = (function() {
       s1 = peg$parseexpression();
       if (s1 !== peg$FAILED) {
         s2 = peg$parsewhitespace();
+        if (s2 === peg$FAILED) {
+          s2 = peg$c10;
+        }
         if (s2 !== peg$FAILED) {
           s3 = peg$parseinfixFunctionName();
           if (s3 !== peg$FAILED) {
             s4 = peg$parsewhitespace();
+            if (s4 === peg$FAILED) {
+              s4 = peg$c10;
+            }
             if (s4 !== peg$FAILED) {
               s5 = peg$parseexpressionWithFunction();
               if (s5 !== peg$FAILED) {
