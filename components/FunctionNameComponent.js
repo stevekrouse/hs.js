@@ -4,7 +4,14 @@ var FunctionName = React.createClass({displayName: 'FunctionName',
     var functionName = this.currentAST().name;
     var func = window.functions[functionName];
 
-    color = func ? func.color : 'black';
+
+    if (functionName === "map"){
+      var color = 'red';
+    } else if (functionName.indexOf("fold") >= 0){
+      var color = 'blue';
+    } else {
+      var color = func ? func.color : 'black';
+    }
 
     return React.DOM.span({className: "functionName", style: {color: color}, key: this.currentAST().id},
       functionName
