@@ -1,6 +1,6 @@
 var FunctionEditor = React.createClass({displayName: 'FunctionEditor',
   getInitialState: function() {
-    return {editing: false, error: false, functionDefinitions: this.props.defaultFunctionDefinitions};
+    return {editing: true, error: false, functionDefinitions: this.props.defaultFunctionDefinitions};
   },
   onClick: function() {
     this.setState({editing: !this.state.editing});
