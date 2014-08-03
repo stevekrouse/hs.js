@@ -24,15 +24,18 @@ var Line = React.createClass({displayName: 'Line',
       this.getDOMNode().focus();
     }
   },
+  saveText: function(event) {
+    try {
+      event.preventDefault();
+      window.updateInitialAST(this.props.lineState.ast.id, HaskellParser.parse(event.target.value));
+      this.setState({editingError: false});
+    } catch (e) {
+      this.setState({editingError: true});
+    }
+  },
   onKeyDown: function(event) {
     if (event.keyCode === 13) {
-      try {
-        event.preventDefault();
-        window.updateInitialAST(this.props.lineState.ast.id, HaskellParser.parse(event.target.value));
-        this.setState({editingError: false});
-      } catch (e) {
-        this.setState({editingError: true});
-      }
+      this.saveText(event);
     }
   },
   listText: function() {
@@ -64,6 +67,7 @@ var Line = React.createClass({displayName: 'Line',
     if (this.props.lineState.editing) {
       return React.DOM.input({
         defaultValue: this.listText(),
+        onBlur: this.saveText,
         onClick: function(event){event.stopPropagation();},
         onChange: this.onTextChange,
         onKeyDown: this.onKeyDown,
