@@ -72,7 +72,7 @@ var Line = React.createClass({displayName: 'Line',
         onChange: this.onTextChange,
         onKeyDown: this.onKeyDown,
         className: (this.state.editingError ? 'input-error' : ''),
-        style: {width: Math.max(100, (this.state.textLength || this.listText().length)*8)}
+        style: {width: Math.max(100, (this.state.textLength || this.listText().length)*10)}
       });
     } else {
       return React.DOM.div({
