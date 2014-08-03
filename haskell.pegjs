@@ -62,7 +62,7 @@ functionApplication
   = f:functionName whitespace args:expression_list {return {functionName: f, type: 'application', id: randomId(), arguments: args}};
 
 infixFunctionApplication
-  = left:expression whitespace f:infixFunctionName whitespace right:expressionWithFunction { return {id: randomId(), functionName: f, type: "application", arguments: [left, right]}}
+  = left:expression whitespace? f:infixFunctionName whitespace? right:expressionWithFunction { return {id: randomId(), functionName: f, type: "application", arguments: [left, right]}}
 
 list
   = "[" whitespace? list:expression_list? whitespace? "]" { return { id: randomId(), type: "list", items: list || [] }; }
