@@ -14,15 +14,15 @@
 }
 
 .line-highlight {
-  background: #eee;
+  background: #fee;
 }
 
 .application-applicable:hover {
-  background: yellow;
+  background: #fcc;
   cursor: pointer;
 }
 
 .application-highlight-clicked-computation,
 .node-highlight-just-computed {
-  background: #ccc;
+  background: #fcc;
 }
