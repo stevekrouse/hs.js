@@ -1,3 +1,16 @@
+var LineContext = React.createClass({displayName: 'LineContext',
+  render: function() {
+    var contextId = this.props.lineState.clickedComputationId || this.props.lineState.applicationHighlightId;
+    var application = ASTTransformations.subtreeById(this.props.lineState.ast, contextId);
+    if (application) {
+      return React.DOM.div({className: 'line-context'}, application.functionName.name);
+    } else {
+      return React.DOM.div();
+    }
+  }
+});
+
+
 var Line = React.createClass({displayName: 'Line',
   highlight: function() {
     window.highlightLine(this.props.lineState.index);
@@ -9,9 +22,10 @@ var Line = React.createClass({displayName: 'Line',
   },
   render: function() {
     var className = "line";
-    if (this.props.lineState.highlightedLineIndex == this.props.lineState.index &&
-        this.props.lineState.index < this.props.lineState.lastIndex) {
+    var lineContext;
+    if (this.props.lineState.highlightedLineIndex == this.props.lineState.index) {
       className += " line-highlight";
+      lineContext = LineContext({lineState: this.props.lineState});
     }
 
     return React.DOM.div({
@@ -19,6 +33,12 @@ var Line = React.createClass({displayName: 'Line',
       onMouseEnter: this.highlight,
       onMouseLeave: this.unhighlight
     },
-      Node({lineState: this.props.lineState, id: this.props.lineState.ast.id}));
+      React.DOM.div({className: 'line-inner'},
+        [
+          Node({lineState: this.props.lineState, id: this.props.lineState.ast.id}),
+          lineContext
+        ]
+      )
+    )
   }
 });
