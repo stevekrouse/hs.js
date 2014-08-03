@@ -34,7 +34,13 @@ var HaskellJSProgram = React.createClass({displayName: 'HaskellJSProgram',
   },
 
   editFirstLine: function() {
-    this.setState({editingFirstLine: true});
+    this.setState({
+      lines: [this.state.lines[0]],
+      applicationHighlightId: null,
+      highlightedLineIndex: null,
+      editingFirstLine: true,
+      showHelpText: false
+    });
   },
 
   updateInitialAST: function(id, subtree) {
