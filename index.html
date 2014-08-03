@@ -1,19 +1,32 @@
 <html>
   <head>
-    <script src="components/LinesComponents/Mixins.js"></script>
+   <!-- Bower Components -->
     <script src="bower_components/react/react.js"></script>
     <script src="bower_components/lodash/dist/lodash.js"></script>
     <script src="bower_components/node-uuid/uuid.js"></script>
-    <script src="components/LinesComponents/LineComponent.js"></script>
-    <script src="components/LinesComponents/ApplicationComponent.js"></script>
-    <script src="components/LinesComponents/FunctionNameComponent.js"></script>
-    <script src="components/LinesComponents/ListComponent.js"></script>
-    <script src="components/LinesComponents/IntComponent.js"></script>
-    <script src="components/LinesComponents/LinesComponent.js"></script>
-    <script src="components/LinesComponents/NodeComponent.js"></script>
+
+    <!-- Line Components -->
+    <script src="components/Mixins.js"></script>
+    <script src="components/LineComponent.js"></script>
+    <script src="components/ApplicationComponent.js"></script>
+    <script src="components/FunctionNameComponent.js"></script>
+    <script src="components/ListComponent.js"></script>
+    <script src="components/IntComponent.js"></script>
+    <script src="components/LinesComponent.js"></script>
+    <script src="components/NodeComponent.js"></script>
+
+    <!-- AST Operations -->
     <script src="ast_transformations.js"></script>
     <script src="initial_ast.js"></script>
 
+
+
+    <!-- Functions -->
+    <script> window.functions = []; </script>
+    <script src="functions/map.js"></script>
+
+
+    <!-- Styles -->
     <link rel="stylesheet" href="app.css">
   </head>
   <body>
@@ -21,17 +34,6 @@
     </div>
   </body>
   <script>
-    // var functionDefinition = {
-    //   typeSignature: "(a -> b) -> [a] -> [b]",
-    //   name: "map",
-    //   lines: [
-    //     "map f []     = []",
-    //     "map f (x:xs) = (f x)"
-    //   ]
-    // }
-
-
-
     var _globalState = {
       lines: [{ast: window.initialAST, clickedComputationId: null}],
       applicationHighlightId: null,

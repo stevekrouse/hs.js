@@ -1,4 +1,4 @@
-var _isValidApplication = function(functionName, arguments) {
+var _isValidApplication = function(functionName, arguments) {  // TODO REMOVE THIS METHOD
   if (functionName === '+') {
     return arguments.length === 2 &&
            arguments[0].type === 'int' &&
