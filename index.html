@@ -21,18 +21,29 @@
     </div>
   </body>
   <script>
-    var ASTs = [window.initialAST];
-    var renderLines = function() {
+    var _globalState = {
+      ASTs: [window.initialAST],
+      applicationHighlightId: null
+    };
+
+    var changeGlobalState = function(globalStateDiff) {
+      _.extend(_globalState, globalStateDiff);
+
       React.renderComponent(
-        Lines({ASTs: ASTs}),
+        Lines(_globalState),
         document.getElementById('lines')
       );
     };
-    renderLines();
+    changeGlobalState({});
 
     window.addLineByApplying = function(id) {
+      var ASTs = _.cloneDeep(_globalState.ASTs);
       ASTs.push(ASTTransformations.applyFunction(ASTs[ASTs.length-1], id));
-      renderLines();
+      changeGlobalState({ASTs: ASTs});
+    };
+
+    window.highlightApplicationId = function(id) {
+      changeGlobalState({applicationHighlightId: id});
     };
   </script>
 </html>
