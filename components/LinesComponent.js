@@ -1,4 +1,3 @@
-// tutorial1-raw.js
 var Lines = React.createClass({displayName: 'Lines',
   render: function() {
     return (

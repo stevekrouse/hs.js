@@ -1,0 +1,9 @@
+.functionName {
+  padding-right: 5px;
+  padding-left: 5px;
+  color: brown;
+}
+
+.lines {
+  font-family: monospace;
+}
