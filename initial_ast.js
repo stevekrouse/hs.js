@@ -1,15 +1,15 @@
 window.initialAST = {
-  id: "29387492384",
+  id: uuid.v4(),
   type: "application",
-  functionName: {type: "functionName", name: "map"},
+  functionName: {id: uuid.v4(), type: "functionName", name: "map"},
   arguments: [
-    {type: "functionName", name: "(+ 1)"},
-    {type: "list", items: [
-      {type: "int", value: 1},
-      {type: "int", value: 2},
-      {type: "int", value: 3},
-      {type: "int", value: 4},
-      {type: "int", value: 5},
+    {id: uuid.v4(), type: "functionName", name: "(+ 1)"},
+    {id: uuid.v4(), type: "list", items: [
+      {id: uuid.v4(), type: "int", value: 1},
+      {id: uuid.v4(), type: "int", value: 2},
+      {id: uuid.v4(), type: "int", value: 3},
+      {id: uuid.v4(), type: "int", value: 4},
+      {id: uuid.v4(), type: "int", value: 5},
     ]}
   ]
 };
