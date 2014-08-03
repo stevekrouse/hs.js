@@ -40,6 +40,22 @@ var _applyFunction = function(node) {
   return func.patterns[index].apply(node.arguments);
 }
 
+var _giveDifferentIds = function(AST) {
+  if (AST.id) AST.id = uuid.v4();
+  var keys = Object.keys(AST)
+  for (var i=0; i<keys.length; i++) {
+    var value = AST[keys[i]];
+    if (_.isArray(value)) {
+      for(var j=0; j<value.length; j++) {
+        _giveDifferentIds(value[j]);
+      }
+    } else if (_.isObject(value)) {
+      _giveDifferentIds(value);
+    }
+  };
+  return AST;
+};
+
 
 window.ASTTransformations = {
   subtreeById: function(AST, id) {
@@ -102,7 +118,7 @@ window.ASTTransformations = {
 
   applyFunction: function(oldAST, id) {
     var subtree = ASTTransformations.subtreeById(oldAST, id);
-    var newSubtree = _applyFunction(_.cloneDeep(subtree));
+    var newSubtree = _applyFunction(_giveDifferentIds(_.cloneDeep(subtree)));
     var newAST = ASTTransformations.replaceSubtree(oldAST, id, newSubtree);
 
     return {ast: newAST, justComputedId: newSubtree.id};
@@ -116,5 +132,23 @@ window.ASTTransformations = {
     } else {
       throw "cannot convert type '" + node.type + "' to String";
     }
+  },
+
+  fillInArguments: function(AST, patternArguments, functionArguments) {
+    var newAST = _giveDifferentIds(_.cloneDeep(AST));
+    if (newAST.type === 'functionName' && _.pluck(patternArguments, 'name').indexOf(newAST.name) >= 0) {
+      newAST = _giveDifferentIds(_.cloneDeep(functionArguments[_.pluck(patternArguments, 'name').indexOf(newAST.name)]));
+      newAST.id = uuid.v4();
+    } else if (_.isArray(newAST)) {
+      newAST = newAST.map(function(item) {
+        return ASTTransformations.fillInArguments(item, patternArguments, functionArguments);
+      });
+    } else if (newAST.type === 'application') {
+      newAST.functionName = ASTTransformations.fillInArguments(newAST.functionName, patternArguments, functionArguments);
+      newAST.arguments = ASTTransformations.fillInArguments(newAST.arguments, patternArguments, functionArguments);
+    } else if (newAST.type === 'list') {
+      newAST.items = ASTTransformations.fillInArguments(newAST.items, patternArguments, functionArguments);
+    }
+    return newAST;
   }
 };

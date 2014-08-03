@@ -6,7 +6,7 @@ var FunctionName = React.createClass({displayName: 'FunctionName',
 
     color = func ? func.color : 'black';
 
-    return React.DOM.span({className: "functionName", style: {color: color}},
+    return React.DOM.span({className: "functionName", style: {color: color}, key: this.currentAST().id},
       functionName
     );
   }

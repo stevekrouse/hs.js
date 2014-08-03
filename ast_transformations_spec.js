@@ -252,4 +252,85 @@ describe('ASTTransformations', function() {
       chai.expect(ASTTransformations.getContextHTML(AST, AST.id)).to.equal(contextHTML);
     });
   });
+
+  describe('fillInArguments', function() {
+    var patternArguments = [
+      {
+        id: 1,
+        type: "functionName",
+        name: "x"
+      },
+      {
+        id: 2,
+        type: "functionName",
+        name: "y"
+      }
+    ];
+    var functionArguments = [
+      {
+        id: 1,
+        type: "functionName",
+        name: "test1"
+      },
+      {
+        id: 2,
+        type: "functionName",
+        name: "test2"
+      }
+    ];
+
+    it('replaces a functionName node', function() {
+      var AST = {
+        id: 1,
+        type: "functionName",
+        name: "y"
+      };
+      var expectedAST = {
+        type: "functionName",
+        name: "test2"
+      };
+      chai.expect(stripIds(ASTTransformations.fillInArguments(AST, patternArguments, functionArguments))).to.deep.equal(expectedAST);
+    });
+
+    it('replaces list of functionName nodes', function() {
+      var AST = {
+        id: 1,
+        type: "list",
+        items: [{
+          id: 2,
+          type: "functionName",
+          name: "y"
+        }]
+      };
+      var expectedAST = {
+        type: "list",
+        items: [{
+          type: "functionName",
+          name: "test2"
+        }]
+      };
+      chai.expect(stripIds(ASTTransformations.fillInArguments(AST, patternArguments, functionArguments))).to.deep.equal(expectedAST);
+    });
+    it('replaces functionName nodes in function applications', function() {
+      var AST = {
+        id: 1,
+        type: "application",
+        functionName: {id: 2, type: 'functionName', name: 'x'},
+        arguments: [{
+          id: 2,
+          type: "functionName",
+          name: "y"
+        }]
+      };
+      var expectedAST = {
+        type: "application",
+        functionName: {type: 'functionName', name: 'test1'},
+        arguments: [{
+          type: "functionName",
+          name: "test2"
+        }]
+      };
+      chai.expect(stripIds(ASTTransformations.fillInArguments(AST, patternArguments, functionArguments))).to.deep.equal(expectedAST);
+    });
+  })
 });

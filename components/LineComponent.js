@@ -20,23 +20,25 @@ var Line = React.createClass({displayName: 'Line',
     var lineContext, lineEditButton;
     if (this.props.lineState.highlightedLineIndex == this.props.lineState.index) {
       className += " line-highlight";
-      lineContext = LineContext({lineState: this.props.lineState});
+      lineContext = LineContext({lineState: this.props.lineState, key: 2});
     }
     if (this.props.lineState.index === 0 && !this.props.lineState.editing) {
       lineEditButton = React.DOM.span({
         className: 'lines-edit',
-        onClick: window.editFirstLine
+        onClick: window.editFirstLine,
+        key: 3
       }, '(edit)');
     }
 
     return React.DOM.div({
       className: className,
       onMouseEnter: this.highlight,
-      onMouseLeave: this.unhighlight
+      onMouseLeave: this.unhighlight,
+      key: this.props.lineState.index
     },
       React.DOM.div({className: 'line-inner'},
         [
-          Node({lineState: this.props.lineState, id: this.props.lineState.ast.id}),
+          Node({lineState: this.props.lineState, id: this.props.lineState.ast.id, key: 1}),
           lineContext,
           lineEditButton
         ]
