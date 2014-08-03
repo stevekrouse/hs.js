@@ -1,5 +1,7 @@
 window.functions[':'] = {
   name: ':',
+  englishName: 'cons',
+  color: 'lightseagreen',
   infix: true,
   typeSignature: 'a -> [a] -> [a]',
   isValidApplication: function(arguments) {

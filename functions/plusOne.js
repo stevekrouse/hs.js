@@ -1,5 +1,7 @@
 window.functions['(+ 1)'] = {
   name: '(+ 1)',
+  englishName: 'plusOne',
+  color: 'blue',
   infix: false,
   typeSignature: 'Int -> Int',
   isValidApplication: function(arguments) {
