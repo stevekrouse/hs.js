@@ -56,6 +56,53 @@ var _giveDifferentIds = function(AST) {
   return AST;
 };
 
+var _convertListPatternToSeparateArguments = function(patternArguments, functionArguments) {
+  var newPatternArguments = [], newFunctionArguments = [];
+  for (var i=0; i<patternArguments.length; i++) {
+    var patternArgument = patternArguments[i];
+    var functionArgument = functionArguments[i];
+    if (patternArgument.type === 'functionName') {
+      newPatternArguments.push(patternArgument);
+      newFunctionArguments.push(functionArgument);
+    } else if (patternArgument.type === 'emptyListPattern') {
+      if (functionArgument.type !== 'list' || functionArgument.items.length !== 0) {
+        throw 'invalid empty list pattern';
+      }
+    } else if (patternArgument.type === 'listPattern') {
+      if (functionArgument.type !== 'list' || functionArgument.items.length <= 0) {
+        throw 'invalid list pattern';
+      }
+      newPatternArguments.push(patternArgument.left);
+      newFunctionArguments.push(functionArgument.items[0]);
+      newPatternArguments.push(patternArgument.right);
+      newFunctionArguments.push({
+        id: uuid.v4(),
+        type: 'list',
+        items: functionArgument.items.slice(1)
+      });
+    }
+  }
+
+  return {patternArguments: newPatternArguments, functionArguments: newFunctionArguments};
+};
+
+_fillInArgumentsInternal = function(AST, patternArguments, functionArguments) {
+  var newAST = _giveDifferentIds(_.cloneDeep(AST));
+  if (newAST.type === 'functionName' && _.pluck(patternArguments, 'name').indexOf(newAST.name) >= 0) {
+    newAST = _giveDifferentIds(_.cloneDeep(functionArguments[_.pluck(patternArguments, 'name').indexOf(newAST.name)]));
+    newAST.id = uuid.v4();
+  } else if (_.isArray(newAST)) {
+    newAST = newAST.map(function(item) {
+      return _fillInArgumentsInternal(item, patternArguments, functionArguments);
+    });
+  } else if (newAST.type === 'application') {
+    newAST.functionName = _fillInArgumentsInternal(newAST.functionName, patternArguments, functionArguments);
+    newAST.arguments = _fillInArgumentsInternal(newAST.arguments, patternArguments, functionArguments);
+  } else if (newAST.type === 'list') {
+    newAST.items = _fillInArgumentsInternal(newAST.items, patternArguments, functionArguments);
+  }
+  return newAST;
+};
 
 window.ASTTransformations = {
   subtreeById: function(AST, id) {
@@ -135,20 +182,7 @@ window.ASTTransformations = {
   },
 
   fillInArguments: function(AST, patternArguments, functionArguments) {
-    var newAST = _giveDifferentIds(_.cloneDeep(AST));
-    if (newAST.type === 'functionName' && _.pluck(patternArguments, 'name').indexOf(newAST.name) >= 0) {
-      newAST = _giveDifferentIds(_.cloneDeep(functionArguments[_.pluck(patternArguments, 'name').indexOf(newAST.name)]));
-      newAST.id = uuid.v4();
-    } else if (_.isArray(newAST)) {
-      newAST = newAST.map(function(item) {
-        return ASTTransformations.fillInArguments(item, patternArguments, functionArguments);
-      });
-    } else if (newAST.type === 'application') {
-      newAST.functionName = ASTTransformations.fillInArguments(newAST.functionName, patternArguments, functionArguments);
-      newAST.arguments = ASTTransformations.fillInArguments(newAST.arguments, patternArguments, functionArguments);
-    } else if (newAST.type === 'list') {
-      newAST.items = ASTTransformations.fillInArguments(newAST.items, patternArguments, functionArguments);
-    }
-    return newAST;
+    var converted = _convertListPatternToSeparateArguments(patternArguments, functionArguments);
+    return _fillInArgumentsInternal(AST, converted.patternArguments, converted.functionArguments);
   }
 };
