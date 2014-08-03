@@ -22,7 +22,7 @@
   </body>
   <script>
     var _globalState = {
-      ASTs: [window.initialAST],
+      lines: [{ast: window.initialAST, clickedComputationId: null}],
       applicationHighlightId: null,
       highlightedLineIndex: null
     };
@@ -38,9 +38,15 @@
     changeGlobalState({});
 
     window.addLineByApplying = function(id) {
-      var ASTs = _.cloneDeep(_globalState.ASTs);
-      ASTs.push(ASTTransformations.applyFunction(ASTs[ASTs.length-1], id));
-      changeGlobalState({ASTs: ASTs});
+      var lines = _.cloneDeep(_globalState.lines);
+
+      lines[lines.length-1].clickedComputationId = id;
+      lines.push({
+        ast: ASTTransformations.applyFunction(lines[lines.length-1].ast, id),
+        clickedComputationId: null
+      });
+
+      changeGlobalState({lines: lines});
     };
 
     window.highlightApplicationId = function(id) {
