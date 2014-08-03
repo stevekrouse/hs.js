@@ -99,11 +99,9 @@ window.ASTTransformations = {
     return null;
   },
 
-  isApplicable: function(AST, id) {
-    var subtree = ASTTransformations.subtreeById(AST, id);
-
-    return subtree.type === 'application' &&
-           _isValidApplication(subtree.functionName.name, subtree.arguments);
+  isApplicable: function(node) {
+    return node.type === 'application' &&
+           _isValidApplication(node.functionName.name, node.arguments);
   },
 
   applyFunction: function(oldAST, id) {
