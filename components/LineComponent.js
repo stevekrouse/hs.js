@@ -17,10 +17,16 @@ var Line = React.createClass({displayName: 'Line',
   },
   render: function() {
     var className = "line";
-    var lineContext;
+    var lineContext, lineEditButton;
     if (this.props.lineState.highlightedLineIndex == this.props.lineState.index) {
       className += " line-highlight";
       lineContext = LineContext({lineState: this.props.lineState});
+    }
+    if (this.props.lineState.index === 0 && !this.props.lineState.editing) {
+      lineEditButton = React.DOM.span({
+        className: 'lines-edit',
+        onClick: window.editFirstLine
+      }, '(edit)');
     }
 
     return React.DOM.div({
@@ -31,7 +37,8 @@ var Line = React.createClass({displayName: 'Line',
       React.DOM.div({className: 'line-inner'},
         [
           Node({lineState: this.props.lineState, id: this.props.lineState.ast.id}),
-          lineContext
+          lineContext,
+          lineEditButton
         ]
       )
     )

@@ -84,10 +84,9 @@ window.ASTTransformations = {
     return html;
   },
 
-  applyFunction: function(oldAST, id) {
+  replaceSubtree: function(oldAST, id, newSubtree) {
     var newAST = _.cloneDeep(oldAST);
     var subtree = ASTTransformations.subtreeById(newAST, id);
-    var newSubtree = _applyFunction(_.cloneDeep(subtree));
 
     // delete all keys of subtree
     var keys = Object.keys(subtree)
@@ -96,6 +95,14 @@ window.ASTTransformations = {
     }
 
     _.extend(subtree, newSubtree);
+
+    return newAST;
+  },
+
+  applyFunction: function(oldAST, id) {
+    var subtree = ASTTransformations.subtreeById(oldAST, id);
+    var newSubtree = _applyFunction(_.cloneDeep(subtree));
+    var newAST = ASTTransformations.replaceSubtree(oldAST, id, newSubtree);
 
     return {ast: newAST, justComputedId: newSubtree.id};
   }
