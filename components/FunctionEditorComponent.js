@@ -43,12 +43,13 @@ var FunctionEditor = React.createClass({displayName: 'FunctionEditor',
 
     window.functions = {
       ':': window.functions[':'],
-      '+': window.functions['+']
+      '+': window.functions['+'],
+      '-': window.functions['-']
     };
 
     var newFunctions = HaskellParser.parse(text + "\n\n", {startRule: 'functionDefinitionList'});
     newFunctions.forEach(function(func) {
-      if ([':', '+'].indexOf(func.name) < 0) {
+      if ([':', '+', '-'].indexOf(func.name) < 0) {
         window.functions[func.name] = func;
       }
     });
