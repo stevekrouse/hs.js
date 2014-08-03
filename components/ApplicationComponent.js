@@ -5,7 +5,7 @@ var Application = React.createClass({displayName: 'Application',
   },
   apply: function() {
     if (this.isApplicable()) {
-      window.addLineByApplying(this.props.ast.id);
+      window.addLineByApplying(this.currentAST().id);
     }
   },
   render: function() {
