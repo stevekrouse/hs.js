@@ -1,4 +1,4 @@
-window.map = {
+window.functions['map'] = {
   name: 'map',
   infix: false,
   typeSignature: '(a -> b) -> [a] -> [b]',
