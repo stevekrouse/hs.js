@@ -15,6 +15,7 @@
     <script src="components/LinesComponent.js"></script>
     <script src="components/NodeComponent.js"></script>
     <script src="components/FunctionEditorComponent.js"></script>
+    <script src="components/ProgramComponent.js"></script>
 
     <!-- AST Operations -->
     <script src="ast_transformations.js"></script>
@@ -40,6 +41,8 @@
     <link rel="stylesheet" href="app.css">
   </head>
   <body>
+    <div id="function-editor"></div>
+
     <div id="title">
       <h1 style="font-size:1.5em; margin-bottom:0px;">Lambda Lessons</h1>
       <h2 style="font-size:1em; color: gray; margin-top:0px;">Pattern-matching, first-class functions, and asbtracting over recursion</h2>
@@ -79,8 +82,7 @@
 
     <hr>
 
-    <div id="lines">
-    </div>
+    <div id="lines"></div>
   </body>
   <script>
     var toggleLessonHighlight = function(e) {
@@ -103,84 +105,14 @@
       }
     }
 
+    React.renderComponent(
+      HaskellJSProgram({defaultValue: 'map addOne [1 2 3 4 5]'}),
+      document.getElementById('lines')
+    );
 
-    var _globalState = {
-      lines: [{ast: window.initialAST, clickedComputationId: null}],
-      applicationHighlightId: null,
-      highlightedLineIndex: null,
-      editingFirstLine: false,
-      showHelpText: true,
-      functionDefinitions: ''
-    };
-
-    var changeGlobalState = function(globalStateDiff) {
-      _.extend(_globalState, globalStateDiff);
-
-      React.renderComponent(
-        Lines(_globalState),
-        document.getElementById('lines')
-      );
-    };
-    changeGlobalState({});
-
-    window.addLineByApplying = function(id) {
-      var lines = _.cloneDeep(_globalState.lines);
-
-      lines[lines.length-1].clickedComputationId = id;
-
-      var applyInfo = ASTTransformations.applyFunction(lines[lines.length-1].ast, id);
-
-      lines.push({
-        ast: applyInfo.ast,
-        clickedComputationId: null,
-        justComputedId: applyInfo.justComputedId
-      });
-
-      changeGlobalState({lines: lines, showHelpText: false});
-    };
-
-    window.highlightApplicationId = function(id) {
-      changeGlobalState({applicationHighlightId: id});
-    };
-
-    window.highlightLine = function(index) {
-      changeGlobalState({highlightedLineIndex: index});
-    };
-
-    window.editFirstLine = function() {
-      changeGlobalState({editingFirstLine: true});
-    };
-
-    window.updateInitialAST = function(id, subtree) {
-      var newAST = ASTTransformations.replaceSubtree(_globalState.lines[0].ast, id, subtree);
-
-      changeGlobalState({
-        lines: [{ast: newAST, clickedComputationId: null}],
-        applicationHighlightId: null,
-        highlightedLineIndex: null,
-        editingFirstLine: false,
-        showHelpText: false
-      });
-    };
-
-    window.updateFunctionDefinitions = function(text) {
-      changeGlobalState({functionDefinitions: text});
-
-      window.functions = {
-        ':': window.functions[':'],
-        '+': window.functions['+'],
-        '(+ 1)': window.functions['(+ 1)'],
-        map: window.functions.map,
-      };
-
-      var newFunctions = HaskellParser.parse(text + "\n\n", {startRule: 'functionDefinitionList'});
-      newFunctions.forEach(function(func) {
-        if ([':', '+', '(+ 1)', 'map'].indexOf(func.name) < 0) {
-          window.functions[func.name] = func;
-        }
-      });
-    };
-
-    updateFunctionDefinitions(window.initialFunctionDefinitions);
+    React.renderComponent(
+      FunctionEditor({defaultFunctionDefinitions: window.initialFunctionDefinitions}),
+      document.getElementById('function-editor')
+    );
   </script>
 </html>

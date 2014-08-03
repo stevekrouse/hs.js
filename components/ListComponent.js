@@ -23,7 +23,7 @@ var List = React.createClass({displayName: 'List',
     if (event.keyCode === 13) {
       try {
         event.preventDefault();
-        window.updateInitialAST(this.currentAST().id, HaskellParser.parse(event.target.value));
+        this.props.lineState.program.updateInitialAST(this.currentAST().id, HaskellParser.parse(event.target.value));
         this.setState({editingError: false});
       } catch (e) {
         this.setState({editingError: true});
