@@ -1,0 +1,28 @@
+{
+  "name": "hs.js",
+  "version": "0.0.0",
+  "description": "hs.js =====",
+  "main": "index.html",
+  "scripts": {
+    "test": "karam start --single-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stevekrouse/hs.js.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stevekrouse/hs.js/issues"
+  },
+  "homepage": "https://github.com/stevekrouse/hs.js",
+  "dependencies": {
+    "chai": "^1.9.1",
+    "karma": "^0.12.19",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-cli": "0.0.4",
+    "karma-mocha": "^0.1.6",
+    "mocha": "^1.21.3"
+  }
+}
