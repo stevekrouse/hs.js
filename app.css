@@ -10,6 +10,8 @@
 
 .lines {
   font-family: monospace;
+  padding-top: 1em;
+  max-width: 1000px;
 }
 
 .line-highlight {
@@ -17,13 +19,15 @@
 }
 .line-inner {
   position: relative;
-  max-width: 800px;
 }
 .line-context {
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0px;
   color: #777;
+  background: #fee;
+  white-space: pre-line;
+  padding: 0 5px;
 }
 
 .application-applicable:hover {
