@@ -14,6 +14,7 @@
     <script src="components/IntComponent.js"></script>
     <script src="components/LinesComponent.js"></script>
     <script src="components/NodeComponent.js"></script>
+    <script src="components/FunctionEditorComponent.js"></script>
 
     <!-- AST Operations -->
     <script src="ast_transformations.js"></script>
@@ -93,7 +94,8 @@
       applicationHighlightId: null,
       highlightedLineIndex: null,
       editingFirstLine: false,
-      showHelpText: true
+      showHelpText: true,
+      functionDefinitions: ''
     };
 
     var changeGlobalState = function(globalStateDiff) {
@@ -145,5 +147,25 @@
         showHelpText: false
       });
     };
+
+    window.updateFunctionDefinitions = function(text) {
+      changeGlobalState({functionDefinitions: text});
+
+      window.functions = {
+        ':': window.functions[':'],
+        '+': window.functions['+'],
+        '(+ 1)': window.functions['(+ 1)'],
+        map: window.functions.map,
+      };
+
+      var newFunctions = HaskellParser.parse(text + "\n\n", {startRule: 'functionDefinitionList'});
+      newFunctions.forEach(function(func) {
+        if ([':', '+', '(+ 1)', 'map'].indexOf(func.name) < 0) {
+          window.functions[func.name] = func;
+        }
+      });
+    };
+
+    updateFunctionDefinitions(window.initialFunctionDefinitions);
   </script>
 </html>

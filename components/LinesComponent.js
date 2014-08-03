@@ -2,6 +2,7 @@ var Lines = React.createClass({displayName: 'Lines',
   render: function() {
     return (
       React.DOM.div({className: "lines"}, [
+        FunctionEditor({key: 'function-editor', functionDefinitions: this.props.functionDefinitions}),
         React.addons.CSSTransitionGroup({transitionName: 'lines-animation', key: 'lines-animation'},
           this.props.lines.map((function(line, index) {
             return Line({lineState: {
