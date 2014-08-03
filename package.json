@@ -23,6 +23,7 @@
     "karma-chrome-launcher": "^0.1.4",
     "karma-cli": "0.0.4",
     "karma-mocha": "^0.1.6",
-    "mocha": "^1.21.3"
+    "mocha": "^1.21.3",
+    "pegjs": "^0.8.0"
   }
 }

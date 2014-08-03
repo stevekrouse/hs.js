@@ -236,4 +236,20 @@ describe('ASTTransformations', function() {
       chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id)).ast).to.deep.equal(ASTafter);
     });
   });
+
+  describe('getContext', function() {
+    it('works for ":"', function() {
+      var AST = {
+        id: 1,
+        type: "application",
+        functionName: {id: 2, type: "functionName", name: "map"},
+        arguments: [
+          {id: 3, type: "functionName", name: "(+ 1)"},
+          {id: 4, type: 'list', items: []}
+        ]
+      };
+      var contextHTML = "<em>map</em> :: (a -> b) -> [a] -> [b]<br><em>map</em> f [] = []";
+      chai.expect(ASTTransformations.getContextHTML(AST, AST.id)).to.equal(contextHTML);
+    });
+  });
 });

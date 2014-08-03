@@ -1,12 +1,7 @@
 var LineContext = React.createClass({displayName: 'LineContext',
   render: function() {
     var contextId = this.props.lineState.clickedComputationId || this.props.lineState.applicationHighlightId;
-    var application = ASTTransformations.subtreeById(this.props.lineState.ast, contextId);
-    if (application) {
-      return React.DOM.div({className: 'line-context'}, application.functionName.name);
-    } else {
-      return React.DOM.div();
-    }
+    return React.DOM.div({className: 'line-context', dangerouslySetInnerHTML: {__html: ASTTransformations.getContextHTML(this.props.lineState.ast, contextId)}});
   }
 });
 

@@ -8,18 +8,16 @@ var _isValidApplication = function(functionName, arguments) {  // TODO REMOVE TH
   }
 };
 
-var _patternMatch = function(func, arguments){
+var _matchingPatternIndex = function(func, arguments){
   for (var i = 0; i < func.patterns.length; i ++){
-    pattern = func.patterns[i];
-
-    if (pattern.doesMatch(arguments)){
-      return pattern.apply(arguments);
+    if (func.patterns[i].doesMatch(arguments)){
+      return i;
     }
   }
   throw "Inexhaustive pattern matching for function '" + func.name + "'.";
 };
 
-var _applyFunction = function(node) {
+var _verifyApplication = function(node) {
   if (node.type !== 'application') {
     throw 'node needs to be an application';
   }
@@ -28,11 +26,17 @@ var _applyFunction = function(node) {
     throw 'invalid application';
   }
 
-  if (window.functions[node.functionName.name] != undefined){
-    return _patternMatch(window.functions[node.functionName.name], node.arguments);
-  } else {
+  if (!window.functions[node.functionName.name]) {
     throw 'function not defined for application';
   }
+};
+
+var _applyFunction = function(node) {
+  _verifyApplication(node);
+
+  var func = window.functions[node.functionName.name];
+  var index = _matchingPatternIndex(func, node.arguments);
+  return func.patterns[index].apply(node.arguments);
 }
 
 
@@ -62,6 +66,22 @@ window.ASTTransformations = {
   isApplicable: function(node) {
     return node.type === 'application' &&
            _isValidApplication(node.functionName.name, node.arguments);
+  },
+
+  getContextHTML: function(AST, id) {
+    var node = ASTTransformations.subtreeById(AST, id);
+    if (!node) return '';
+    _verifyApplication(node);
+
+    var func = window.functions[node.functionName.name];
+    var index = _matchingPatternIndex(func, node.arguments);
+    var functionName = '<em>' + (func.infix ? '(' : '') + func.name + (func.infix ? ')' : '') + '</em>';
+
+    var html = functionName + ' :: ' + func.typeSignature;
+    if (func.patterns[index].definitionLine) {
+      html += '<br>' + functionName + ' ' + func.patterns[index].definitionLine
+    }
+    return html;
   },
 
   applyFunction: function(oldAST, id) {
