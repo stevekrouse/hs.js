@@ -9,6 +9,9 @@ window.functions[':'] = {
     return arguments.length === 2 &&
            arguments[1].type === 'list';
   },
+  astToString: function(arguments) {
+   return ":";
+  },
   patterns: [
     {
       definitionLine: null,
