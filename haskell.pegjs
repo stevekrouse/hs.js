@@ -22,7 +22,7 @@ infixFunctionApplication
   = left:expression whitespace f:infixFunctionName whitespace right:expressionWithInfix { return {id: randomId(), functionName: f, type: "application", arguments: [left, right]}}
 
 list
-  = "[" whitespace? list:expression_list? whitespace? "]" { return { id: randomId(), type: "list", items: list }; }
+  = "[" whitespace? list:expression_list? whitespace? "]" { return { id: randomId(), type: "list", items: list || [] }; }
 
 expression_list
   = exp1:expression list:(whitespace_expression)* { list.unshift(exp1); return list; }
