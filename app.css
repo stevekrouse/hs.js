@@ -74,7 +74,7 @@ input {
   font: 1em monospace;
   border: none;
   outline: none;
-  background: yellow;
+  background: none;
 }
 input.input-error {
   outline: 1px solid red;
