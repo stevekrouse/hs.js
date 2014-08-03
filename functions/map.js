@@ -1,28 +1,27 @@
-var map = {
+window.map = {
   name: 'map',
-  infix: 'false',
+  infix: false,
   typeSignature: '(a -> b) -> [a] -> [b]',
   isValidApplication: function(arguments) {
-   arguments[0].type === 'functionName' &&
-   arguments[1].type === 'list';
+    return arguments[0].type === 'functionName' &&
+           arguments[1].type === 'list';
   },
   patterns: [
     {
       definitionLine: "f [] = []",
       doesMatch: function(arguments){
-        return node.arguments[1].items.length === 0;
+        return arguments[1].items.length === 0;
       },
       apply: function(arguments){
-        return {id: uuid.v4(), type: 'list', items: []}
+        return {id: uuid.v4(), type: 'list', items: []};
       }
     },
     {
       definitionLine: "f (x:xs) = f x : map f xs",
       doesMatch: function(arguments){
-        return node.arguments[1].items.length === 0;
+        return arguments[1].items.length >= 1;
       },
       apply: function(arguments){
-        return {id: uuid.v4(), type: 'list', items: []}
         return {
           id: uuid.v4(),
           type: 'application',
@@ -31,16 +30,16 @@ var map = {
             {
               id: uuid.v4(),
               type: 'application',
-              functionName: node.arguments[0],
-              arguments: [node.arguments[1].items[0]]
+              functionName: arguments[0],
+              arguments: [arguments[1].items[0]]
             },
             {
               id: uuid.v4(),
               type: 'application',
               functionName: {id: uuid.v4(), type: 'functionName', name: 'map'},
               arguments: [
-                node.arguments[0],
-                {id: uuid.v4(), type: 'list', items: node.arguments[1].items.slice(1)}
+                arguments[0],
+                {id: uuid.v4(), type: 'list', items: arguments[1].items.slice(1)}
               ]
             }
           ]
@@ -49,4 +48,4 @@ var map = {
     }
   ]
 };
-window.functions.push(map);
+

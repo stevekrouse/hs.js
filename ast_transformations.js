@@ -1,21 +1,27 @@
 var _isValidApplication = function(functionName, arguments) {  // TODO REMOVE THIS METHOD
   if (functionName === '+') {
-    return arguments.length === 2 &&
-           arguments[0].type === 'int' &&
-           arguments[1].type === 'int'
+    return window.plus.isValidApplication(arguments);
   } else if (functionName === 'map') {
-    return arguments.length === 2 &&
-           arguments[0].type === 'functionName' &&
-           arguments[1].type === 'list'
+    return window.map.isValidApplication(arguments);
   } else if (functionName === '(+ 1)') {
-    return arguments.length === 1 &&
-           arguments[0].type === 'int'
+    return window.plusOne.isValidApplication(arguments);
   } else if (functionName === ':') {
-    return arguments.length === 2 &&
-           arguments[1].type === 'list'
+    return window.cons.isValidApplication(arguments);
   } else {
     return false;
   }
+};
+
+var _patternMatch = function(func, arguments){
+  for (var i = 0; i < func.patterns.length; i ++){
+    pattern = func.patterns[i];
+
+    if (pattern.doesMatch(arguments)){
+      return pattern.apply(arguments);
+    }
+  }
+
+  alert("Inexhaustive pattern matching for function '" + func.name + "'.");
 };
 
 var _applyFunction = function(node) {
@@ -26,55 +32,16 @@ var _applyFunction = function(node) {
     throw 'invalid application';
   }
   if (node.functionName.name === '+') {
-    return {
-      id: uuid.v4(),
-      type: 'int',
-      value: node.arguments[0].value + node.arguments[1].value
-    };
+    return _patternMatch(window.plus, node.arguments);
   } else if (node.functionName.name === '(+ 1)') {
-    return {
-      id: uuid.v4(),
-      type: 'int',
-      value: node.arguments[0].value + 1
-    };
+    return _patternMatch(window.plusOne, node.arguments);
   } else if (node.functionName.name === 'map') {
-    if (node.arguments[1].items.length === 0) {  // grab this for now, abstract later
-      return {id: uuid.v4(), type: 'list', items: []}
-    }
-
-    return {
-      id: uuid.v4(),
-      type: 'application',
-      functionName: {id: uuid.v4(), type: 'functionName', name: ':', infix: true},
-      arguments: [
-        {
-          id: uuid.v4(),
-          type: 'application',
-          functionName: node.arguments[0],
-          arguments: [node.arguments[1].items[0]]
-        },
-        {
-          id: uuid.v4(),
-          type: 'application',
-          functionName: {id: uuid.v4(), type: 'functionName', name: 'map'},
-          arguments: [
-            node.arguments[0],
-            {id: uuid.v4(), type: 'list', items: node.arguments[1].items.slice(1)}
-          ]
-        }
-      ]
-    };
+    return _patternMatch(window.map, node.arguments);
   } else if (node.functionName.name === ':') {
-    var items = node.arguments[1].items;
-    items.unshift(node.arguments[0]);
-
-    return {
-      id: uuid.v4(),
-      type: 'list',
-      items: items
-    };
+    return _patternMatch(window.cons, node.arguments);
   }
 }
+
 
 window.ASTTransformations = {
   subtreeById: function(AST, id) {

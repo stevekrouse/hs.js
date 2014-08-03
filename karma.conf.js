@@ -5,6 +5,7 @@ module.exports = function(config) {
       'bower_components/lodash/dist/lodash.js',
       'bower_components/node-uuid/uuid.js',
       'ast_transformations.js',
+      'functions/*.js',
       '*_spec.js'
     ],
     reporters: ['progress'],
