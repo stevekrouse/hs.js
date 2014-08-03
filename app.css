@@ -139,10 +139,11 @@ input.input-error {
   position: fixed;
   top: 5px;
   right: 10px;
+  font: 1em monospace;
 }
 .function-editor {
   position: fixed;
-  top: 30px;
+  top: 25px;
   right: 10px;
   height: 300px;
   width: 20%;
