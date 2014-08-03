@@ -1,3 +1,19 @@
+var stripIds = function(AST) {
+  delete AST.id;
+  var keys = Object.keys(AST)
+  for (var i=0; i<keys.length; i++) {
+    var value = AST[keys[i]];
+    if (_.isArray(value)) {
+      for(var j=0; j<value.length; j++) {
+        stripIds(value[j]);
+      }
+    } else if (_.isObject(value)) {
+      stripIds(value);
+    }
+  };
+  return AST;
+};
+
 describe('ASTTransformations', function() {
   describe('subtreeById', function() {
     it('finds a subtree inside functionName"', function() {
@@ -143,7 +159,7 @@ describe('ASTTransformations', function() {
     });
   });
 
-  describe.skip('applyFunction', function() {
+  describe('applyFunction', function() {
     it('computes "(+ 1) 1" => "2"', function() {
       var ASTbefore = {
         id: 1,
@@ -153,8 +169,92 @@ describe('ASTTransformations', function() {
           {id: 3, type: "int", value: 1}
         ]
       };
-      var ASTafter = {id: 3, type: "int", value: 2};
-      chai.expect(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id)).to.equal(ASTafter);
+      var ASTafter = {type: "int", value: 2};
+      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id))).to.deep.equal(ASTafter);
+    });
+
+    it('computes "1 + 1" => "2"', function() {
+      var ASTbefore = {
+        id: 1,
+        type: "application",
+        functionName: {id: 2, type: "functionName", name: "+", infix: true},
+        arguments: [
+          {id: 3, type: "int", value: 1},
+          {id: 4, type: "int", value: 1}
+        ]
+      };
+      var ASTafter = {type: "int", value: 2};
+      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id))).to.deep.equal(ASTafter);
+    });
+
+    it('computes "map f []" => "[]"', function() {
+      var ASTbefore = {
+        id: 1,
+        type: "application",
+        functionName: {id: 2, type: "functionName", name: "map"},
+        arguments: [
+          {id: 3, type: "functionName", name: "f"},
+          {id: 4, type: "list", items: []}
+        ]
+      };
+      var ASTafter = {type: "list", items: []}
+      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id))).to.deep.equal(ASTafter);
+    });
+
+    it('computes "map f [1]" => "(f 1) : (map f [])"', function() {
+      var ASTbefore = {
+        id: 1,
+        type: "application",
+        functionName: {id: 2, type: "functionName", name: "map"},
+        arguments: [
+          {id: 3, type: "functionName", name: "f"},
+          {id: 4, type: "list", items: [
+            {type: 'int', value: 1}
+          ]}
+        ]
+      };
+      var ASTafter = {
+        type: "application",
+        functionName: {type: "functionName", name: ":", infix: true},
+        arguments: [
+          {
+            type: "application",
+            functionName: {type: "functionName", name: "f"},
+            arguments: [{type: "int", value: 1}]
+          },
+          {
+            type: "application",
+            functionName: {type: "functionName", name: "map"},
+            arguments: [
+              {type: "functionName", name: "f"},
+              {type: "list", items: []}
+            ]
+          }
+        ]
+      }
+      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id))).to.deep.equal(ASTafter);
+    });
+
+    it('computes "1 : [2]" => "[1 2]"', function() {
+      var ASTbefore = {
+        id: 1,
+        type: "application",
+        functionName: {id: 2, type: "functionName", name: ":", infix: true},
+        arguments: [
+          {id: 3, type: "int", value: 1},
+          {id: 4, type: 'list', items: [
+            {id: 5, type: "int", value: 2}
+          ]}
+        ]
+      };
+      var ASTafter = {
+        type: 'list',
+        items: [
+          {type: "int", value: 1},
+          {type: "int", value: 2}
+        ]
+      };
+      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id))).to.deep.equal(ASTafter);
     });
   });
 });
