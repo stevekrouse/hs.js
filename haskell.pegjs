@@ -5,6 +5,35 @@
 start
   = expressionWithFunction
 
+functionDefinitionList
+  = functionDefinitionPlusWhitespace*
+
+functionDefinitionPlusWhitespace
+  = functionDefinition:functionDefinition whitespace_newline { return functionDefinition; }
+
+functionDefinition
+  = functionName:functionName typeSignature:functionDefinitionTypeSignature whitespace_newline patterns:(functionDefinitionPatternLine)+ { return {
+    name: functionName.name,
+    englishName: functionName.name,
+    typeSignature: typeSignature,
+    patterns: patterns,
+    isValidApplication: function(functionArguments) { return functionArguments.length === patterns[0].numberOfArguments;
+  }}; }
+
+functionDefinitionTypeSignature
+  = whitespace "::" whitespace typesig:[ A-Za-z>-]+ { return typesig.join(""); }
+
+functionDefinitionPatternLine
+  = functionName patternArguments:functionNameWithWhitespace* whitespace? "=" whitespace exp:expressionWithFunction { return {
+    definitionLine: text(),
+    numberOfArguments: patternArguments.length,
+    doesMatch: function() { return true; },
+    apply: function(functionArguments) { return ASTTransformations.fillInArguments(exp, patternArguments, functionArguments); }
+  }; }
+
+functionNameWithWhitespace
+  = whitespace functionName:functionName { return functionName; }
+
 expression
   = "(" whitespace? exp:expressionWithFunction whitespace? ")" { return exp; }
   / list
@@ -43,3 +72,6 @@ integer
 
 whitespace
   = " "+
+
+whitespace_newline
+  = [ \n]+

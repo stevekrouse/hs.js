@@ -12,7 +12,7 @@ var Node = React.createClass({displayName: 'Node',
     } else if (currentAST.type == "int") {
       return Int({lineState: this.props.lineState, id: currentAST.id});
     } else {
-       return React.DOM.span({}, "cannot handle ast of this type");
+      return React.DOM.span({}, "cannot handle ast of this type");
     }
   },
   render: function() {

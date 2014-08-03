@@ -4,7 +4,7 @@
   "description": "hs.js =====",
   "main": "index.html",
   "scripts": {
-    "pegjs": "pegjs -e HaskellParser haskell.pegjs haskell-parser.js",
+    "pegjs": "pegjs -e HaskellParser --allowed-start-rules start,functionDefinitionList haskell.pegjs haskell-parser.js",
     "test": "karam start --single-run"
   },
   "repository": {

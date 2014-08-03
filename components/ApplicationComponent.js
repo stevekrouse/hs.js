@@ -10,8 +10,9 @@ var Application = React.createClass({displayName: 'Application',
       event.stopPropagation();
     }
   },
-  highlight: function() {
-    if (this.isApplicable()) {
+  highlight: function(e) {
+    e.stopPropagation();
+    if (this.isApplicable() && this.currentAST().id !== this.props.lineState.applicationHighlightId) {
       this.previousHighlightApplicationId = this.props.lineState.applicationHighlightId;
       window.highlightApplicationId(this.currentAST().id);
     }
@@ -25,11 +26,11 @@ var Application = React.createClass({displayName: 'Application',
     var currentAST = this.currentAST();
 
     var funcAndArgs = currentAST.arguments.map((function(arg){
-      return Node({lineState: this.props.lineState, id: arg.id});
+      return Node({lineState: this.props.lineState, id: arg.id, key: arg.id});
     }).bind(this));
 
     indexToAddFunction = currentAST.functionName.infix ? 1 : 0;
-    funcAndArgs.splice(indexToAddFunction, 0, FunctionName({lineState: this.props.lineState, id: currentAST.functionName.id}));
+    funcAndArgs.splice(indexToAddFunction, 0, FunctionName({lineState: this.props.lineState, id: currentAST.functionName.id, key: currentAST.functionName.id}));
 
     funcAndArgs.unshift('(');
     funcAndArgs.push(')');
@@ -46,7 +47,9 @@ var Application = React.createClass({displayName: 'Application',
       className: className,
       onClick: this.apply,
       onMouseEnter: this.highlight,
-      onMouseLeave: this.unhighlight
+      onMouseMove: this.highlight,
+      onMouseLeave: this.unhighlight,
+      key: currentAST.id
     },
       funcAndArgs
     );

@@ -45,7 +45,7 @@ var List = React.createClass({displayName: 'List',
       });
     } else {
       items = this.currentAST().items.map((function(item){
-        return Node({lineState: this.props.lineState, id: item.id});
+        return Node({lineState: this.props.lineState, id: item.id, key: item.id});
       }).bind(this));
       items.unshift('[');
       items.push(']');
