@@ -10,11 +10,15 @@ pre {
   color: rgb(253, 46, 46);
 }
 
+.foldInLesson {
+  color: blue;
+}
+
 #mapLesson {
   font-size: 1em;
 }
 
-.map-lesson-highlight {
+.lesson-highlight {
    background: rgb(228, 246, 255);
 }
 
@@ -33,6 +37,7 @@ pre {
   padding: 1em;
   box-shadow: 0 0 3px #777;
   margin-top: 1em;
+  min-height: 300px;
 }
 .line {
   width: 80%;
