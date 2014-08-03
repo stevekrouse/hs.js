@@ -52,9 +52,13 @@
       var lines = _.cloneDeep(_globalState.lines);
 
       lines[lines.length-1].clickedComputationId = id;
+
+      var applyInfo = ASTTransformations.applyFunction(lines[lines.length-1].ast, id);
+
       lines.push({
-        ast: ASTTransformations.applyFunction(lines[lines.length-1].ast, id),
-        clickedComputationId: null
+        ast: applyInfo.ast,
+        clickedComputationId: null,
+        justComputedId: applyInfo.justComputedId
       });
 
       changeGlobalState({lines: lines});

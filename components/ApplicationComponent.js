@@ -41,6 +41,9 @@ var Application = React.createClass({displayName: 'Application',
     if (this.props.lineState.highlightedLineIndex == this.props.lineState.index && this.currentAST().id === this.props.lineState.clickedComputationId) {
       className += ' application-highlight-clicked-computation';
     }
+    if (this.props.lineState.highlightedLineIndex+1 == this.props.lineState.index && this.currentAST().id === this.props.lineState.justComputedId) {
+      className += ' application-highlight-just-computed';
+    }
 
     return React.DOM.span({
       className: className,
