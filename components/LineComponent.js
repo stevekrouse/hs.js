@@ -27,7 +27,7 @@ var Line = React.createClass({displayName: 'Line',
   saveText: function(event) {
     try {
       event.preventDefault();
-      window.updateInitialAST(this.props.lineState.ast.id, HaskellParser.parse(event.target.value));
+      this.props.lineState.program.updateInitialAST(this.props.lineState.ast.id, HaskellParser.parse(event.target.value));
       this.setState({editingError: false});
     } catch (e) {
       this.setState({editingError: true});
@@ -42,11 +42,11 @@ var Line = React.createClass({displayName: 'Line',
     return window.ASTTransformations.astToString(this.props.lineState.ast);
   },
   highlight: function() {
-    window.highlightLine(this.props.lineState.index);
+    this.props.lineState.program.highlightLine(this.props.lineState.index);
   },
   unhighlight: function() {
     if (this.props.lineState.highlightedLineIndex == this.props.lineState.index) {
-      window.highlightLine(null);
+      this.props.lineState.program.highlightLine(null);
     }
   },
   render: function() {
@@ -59,7 +59,7 @@ var Line = React.createClass({displayName: 'Line',
     if (this.props.lineState.index === 0 && !this.props.lineState.editing) {
       lineEditButton = React.DOM.span({
         className: 'lines-edit',
-        onClick: window.editFirstLine,
+        onClick: this.props.lineState.program.editFirstLine,
         key: 3
       }, 'edit input haskell (advanced)');
     }

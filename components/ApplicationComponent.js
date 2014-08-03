@@ -6,7 +6,7 @@ var Application = React.createClass({displayName: 'Application',
   },
   apply: function(event) {
     if (this.isApplicable()) {
-      window.addLineByApplying(this.currentAST().id);
+      this.props.lineState.program.addLineByApplying(this.currentAST().id);
       event.stopPropagation();
     }
   },
@@ -14,12 +14,12 @@ var Application = React.createClass({displayName: 'Application',
     e.stopPropagation();
     if (this.isApplicable() && this.currentAST().id !== this.props.lineState.applicationHighlightId) {
       this.previousHighlightApplicationId = this.props.lineState.applicationHighlightId;
-      window.highlightApplicationId(this.currentAST().id);
+      this.props.lineState.program.highlightApplicationId(this.currentAST().id);
     }
   },
   unhighlight: function() {
     if (this.currentAST().id === this.props.lineState.applicationHighlightId) {
-      window.highlightApplicationId(this.previousHighlightApplicationId);
+      this.props.lineState.program.highlightApplicationId(this.previousHighlightApplicationId);
     }
   },
   render: function() {
