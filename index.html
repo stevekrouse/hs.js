@@ -89,7 +89,7 @@
       <div id="twoFoldDescriptions" style="margin-top:10px">
         <span> <code class="foldInLesson">fold</code> describes 2 functions that  "summarize" the elements in a list.</span>
         <ul style="padding-left: 30px;margin-top: 5px;">
-          <li><code class="foldrInLesson">foldr</code> - applies <code>f</code> to the first element and the result of folding the rest (<code> f x </code> on the left and multiple foldl calls )</li>
+          <li><code class="foldrInLesson">foldr</code> - applies <code>f</code> to the first element and the result of folding the rest (<code> f x </code> on the left and multiple <code class="foldrInLesson">foldr</code> calls )</li>
 
           <li><code class="foldlInLesson">foldl</code> - recurses immediately, making <code>f x i</code> the new initial value (only one <code class="foldlInLesson">foldl</code> in the whole trace)</li>
         </ul>
@@ -105,13 +105,13 @@
         <div class="foldrLessonTypeSignature" >
           <span><code class="foldrInLesson">foldr</code> takes 3 inputs</span>
           <ul style="padding-left: 30px;margin-top: 5px;">
-            <li>function of type <code>(a -> b -> a)</code></li>
-            <li>initial value of type <code>a</code></li>
-            <li>list of type <code>[b]</code></li>
+            <li>function of type <code>(a -> b -> b)</code></li>
+            <li>initial value of type <code>b</code></li>
+            <li>list of type <code>[a]</code></li>
           </ul>
           <span>and returns</span>
           <ul style="padding-left: 30px;margin-top: 5px;">
-            <li>accumulated value of type <code>a</code></li>
+            <li>accumulated value of type <code>b</code></li>
           </ul>
         </div>
 
@@ -121,7 +121,7 @@
           </div>
           </br>
           <div class="foldrLessonRecursiveCase">
-            The recursive-case pattern matches on the first list element <code> x </code> and returns <code>f (<code class="foldrInLesson">foldr</code> f i xs) x</code>.
+            The recursive-case pattern matches on the first list element <code> x </code> and returns <code>f x (<code class="foldrInLesson">foldr</code> f i xs)</code>.
           </div>
         </div>
         <div id="foldrLines"></div>
@@ -143,7 +143,7 @@
            </ul>
            <span>and returns</span>
            <ul style="padding-left: 30px;margin-top: 5px;">
-             <li>accumulated value of type <code>b</code></li>
+             <li>accumulated value of type <code>a</code></li>
            </ul>
          </div>
 
