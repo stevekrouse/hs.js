@@ -39,10 +39,55 @@
     <link rel="stylesheet" href="app.css">
   </head>
   <body>
+    <div id="mapLesson">
+      <div>
+        Map is a function that performs some operation on every element in a list.
+      </div>
+
+      <pre>
+        <span class="mapLessonTypeSignature">map :: (a -> b) -> [a] -> [b]</span>
+        <span class="mapLessonBaseCase">map f [] = []</span>
+        <span class="mapLessonRecursiveCase">map f (x:xs) = f x : map f xs</span>
+      </pre>
+
+      <div class="mapLessonTypeSignature" >
+        It is a two input function; it takes a function of type <code>(a -> b)</code> and a list of type <code>[a]</code> and returns a list of type <code>[b]</code>.
+      </div>
+
+      <div class="mapLessonPatternMatches" style="padding-top: 10px;">
+        <span class="mapLessonBaseCase">
+          The base-case of <code>map</code> pattern-matches on the empty list (<code>[]</code>), which returns the empty list (<code>[]</code>).
+        </span>
+        <span class="mapLessonRecursiveCase">
+           It accomplished this by pattern matching on the first element of the input list (<code>x</code>) and cons-ing (<code>:</code>) the input function to the first element <code>(f x)</code> onto the result of <code>map</code>-ing f onto the rest of the list (<code>map f xs</code>).
+         </span>
+      </div>
+    </div>
     <div id="lines">
     </div>
   </body>
   <script>
+    var toggleLessonHighlight = function(e) {
+      var blahs = document.getElementsByClassName(e.target.classList[0]);
+      for (var i = 0; i < blahs.length; i ++){
+        blah = blahs[i];
+        blah.classList.toggle("map-lesson-highlight");
+      };
+    };
+
+    names = ['mapLessonRecursiveCase', 'mapLessonBaseCase', 'mapLessonTypeSignature']
+    for (var j = 0; j < names.length; j++) {
+      var name = names[j];
+
+      var things = document.getElementsByClassName(name);
+      for (var i = 0; i < things.length; i ++){
+        thing = things[i];
+        thing.addEventListener('mouseenter', toggleLessonHighlight);
+        thing.addEventListener('mouseleave', toggleLessonHighlight);
+      }
+    }
+
+
     var _globalState = {
       lines: [{ast: window.initialAST, clickedComputationId: null}],
       applicationHighlightId: null,
