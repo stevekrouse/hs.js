@@ -1,8 +1,6 @@
 var Line = React.createClass({displayName: 'Line',
   highlight: function() {
-    if (this.props.lineState.index < this.props.lineState.lastIndex) {
-      window.highlightLine(this.props.lineState.index);
-    }
+    window.highlightLine(this.props.lineState.index);
   },
   unhighlight: function() {
     if (this.props.lineState.highlightedLineIndex == this.props.lineState.index) {
@@ -11,7 +9,8 @@ var Line = React.createClass({displayName: 'Line',
   },
   render: function() {
     var className = "line";
-    if (this.props.lineState.highlightedLineIndex == this.props.lineState.index) {
+    if (this.props.lineState.highlightedLineIndex == this.props.lineState.index &&
+        this.props.lineState.index < this.props.lineState.lastIndex) {
       className += " line-highlight";
     }
 

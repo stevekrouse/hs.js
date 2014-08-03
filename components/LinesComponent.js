@@ -8,6 +8,7 @@ var Lines = React.createClass({displayName: 'Lines',
             index: index,
             lastIndex: this.props.lines.length-1,
             clickedComputationId: line.clickedComputationId,
+            justComputedId: line.justComputedId,
             applicationHighlightId: this.props.applicationHighlightId,
             highlightedLineIndex: this.props.highlightedLineIndex
           }});

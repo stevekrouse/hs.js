@@ -149,7 +149,7 @@ describe('ASTTransformations', function() {
         ]
       };
       var ASTafter = {type: "int", value: 2};
-      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id))).to.deep.equal(ASTafter);
+      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id)).ast).to.deep.equal(ASTafter);
     });
 
     it('computes "1 + 1" => "2"', function() {
@@ -163,7 +163,7 @@ describe('ASTTransformations', function() {
         ]
       };
       var ASTafter = {type: "int", value: 2};
-      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id))).to.deep.equal(ASTafter);
+      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id)).ast).to.deep.equal(ASTafter);
     });
 
     it('computes "map f []" => "[]"', function() {
@@ -177,7 +177,7 @@ describe('ASTTransformations', function() {
         ]
       };
       var ASTafter = {type: "list", items: []}
-      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id))).to.deep.equal(ASTafter);
+      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id)).ast).to.deep.equal(ASTafter);
     });
 
     it('computes "map f [1]" => "(f 1) : (map f [])"', function() {
@@ -211,7 +211,7 @@ describe('ASTTransformations', function() {
           }
         ]
       }
-      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id))).to.deep.equal(ASTafter);
+      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id)).ast).to.deep.equal(ASTafter);
     });
 
     it('computes "1 : [2]" => "[1 2]"', function() {
@@ -233,7 +233,7 @@ describe('ASTTransformations', function() {
           {type: "int", value: 2}
         ]
       };
-      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id))).to.deep.equal(ASTafter);
+      chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id)).ast).to.deep.equal(ASTafter);
     });
   });
 });
