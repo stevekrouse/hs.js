@@ -1,4 +1,5 @@
 window.functions = {};
+window.astNodeTypes = {};
 
 var _isValidApplication = function(functionName, arguments) {  // TODO REMOVE THIS METHOD
   if (window.functions[functionName] != undefined){
@@ -105,5 +106,15 @@ window.ASTTransformations = {
     var newAST = ASTTransformations.replaceSubtree(oldAST, id, newSubtree);
 
     return {ast: newAST, justComputedId: newSubtree.id};
+  },
+
+  astToString: function(node) {
+    var astNodeTypes = Object.keys(window.astNodeTypes);
+
+    if ((astNodeTypes.indexOf(node.type)) >= 0){
+      return window.astNodeTypes[node.type].astToString(node);
+    } else {
+      throw "cannot convert type '" + node.type + "' to String";
+    }
   }
 };

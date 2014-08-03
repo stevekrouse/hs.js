@@ -23,15 +23,18 @@ var List = React.createClass({displayName: 'List',
       }
     }
   },
+  listText: function() {
+    return window.ASTTransformations.astToString(this.currentAST());
+  },
   render: function() {
     if (this.props.lineState.editing) {
       return React.DOM.input({
-        defaultValue: window.ASTTransformations.astToString(this.currentAST()),
+        defaultValue: this.listText(),
         onClick: function(event){event.stopPropagation();},
         onChange: this.onTextChange,
         onKeyDown: this.onKeyDown,
         className: (this.state.editingError ? 'input-error' : ''),
-        style: {width: Math.max(100, (this.state.textLength || listText.length)*8)}
+        style: {width: Math.max(100, (this.state.textLength || this.listText().length)*8)}
       });
     } else {
       items = this.currentAST().items.map((function(item){
