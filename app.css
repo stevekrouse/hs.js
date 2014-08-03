@@ -1,3 +1,11 @@
+body {
+  font-family: 'Optima', 'Arial', 'Helvetica', 'sans-serif';
+}
+
+.map-lesson-highlight {
+   background: rgb(228, 246, 255);
+}
+
 .functionName {
   padding-right: 5px;
   padding-left: 5px;
