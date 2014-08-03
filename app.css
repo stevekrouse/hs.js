@@ -21,3 +21,7 @@
   background: yellow;
   cursor: pointer;
 }
+
+.application-highlight-clicked-computation {
+  background: #ccc;
+}
