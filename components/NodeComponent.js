@@ -9,10 +9,9 @@ var Node = React.createClass({displayName: 'Node',
       console.log(currentAST)
       return FunctionName({ast: this.props.ast, id: currentAST.id});
     } else if (currentAST.type == "list") {
-      return React.DOM.span({}, "blah");
-      //return List({ast: this.props.ast, id: currentAST.id);
+      return List({ast: this.props.ast, id: currentAST.id});
     } else if (currentAST.type == "int") {
-      return React.DOM.span({}, "not yet implemented");
+      return Int({ast: this.props.ast, id: currentAST.id});
     } else {
        return React.DOM.span({}, "cannot handle ast of this type");
     }
