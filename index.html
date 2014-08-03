@@ -40,20 +40,18 @@
     <link rel="stylesheet" href="app.css">
   </head>
   <body>
-    <title>
-      &#955; Lessons
-    </title>
-    <div id="function-editor"></div>
-
+    <title>&#955; Lessons</title>
     <div id="title">
       <h1 style="font-size:1.5em; margin-bottom:0px;">&#955; Lessons</h1>
-      <h2 style="font-size:1em; color: gray; margin-top:0px;">Pattern-matching, first-class functions, and asbtracting over recursion</h2>
+      <h2 style="font-size:1em; color: gray; margin-top:0px;">Pattern-matching, first-class functions, and asbtracting over recursion in Haskell</h2>
     </div>
+
+    <div id="function-editor"></div>
 
     <div id="mapLesson">
       <div style="margin-bottom:5px"><code class="mapInLesson" style="font-size:1.8em; font-weight:bold; margin-bottom:10px">map</code></div>
       <div>
-        <code class="mapInLesson">map</code> is a Haskell function that performs some operation on every element in a list.
+        <code class="mapInLesson">map</code> is a function that performs some operation on every element in a list.
       </div>
 
       <pre><div class="mapLessonTypeSignature">map :: (a -> b) -> [a] -> [b]</div><div class="mapLessonBaseCase">map f [] = []</div><div class="mapLessonRecursiveCase">map f (x:xs) = f x : map f xs</div></pre>
@@ -77,23 +75,64 @@
         </div>
        </br>
         <div  class="mapLessonRecursiveCase">
+           The recursive-case pattern matches on the first list element <code> x </code> and returns <code>(f x) : map f xs</code>.
+         </div>
+      </div>
+    </div>
+    <div id="mapLines"></div>
+
+    <div id="foldlesson" style="margin-top: 10px">
+      <div style="margin-bottom:5px">
+        <code class="foldInLesson" style="font-size:1.8em; font-weight:bold; margin-bottom:10px">fold</code>
+      </div>
+      <div id="twoFoldDescriptions" style="margin-top:10px">
+        <span> <code class="foldInLesson">fold</code> describes 2 functions that  "summarize" the elements in a list.</span>
+        <ul style="padding-left: 30px;margin-top: 5px;">
+          <li><code class="foldrInLesson">foldr</code> - something about foldr</li>
+          <li><code class="foldrInLesson">foldl</code> - something about foldl</li>
+        </ul>
+      </div>
+
+
+      <div style="margin-bottom:5px; margin-top:10px;">
+        <code class="foldInLesson" style="font-size:1.3em; font-weight:bold; margin-bottom:10px">foldr</code>
+      </div>
+      <pre><div class="foldrLessonTypeSignature">foldl :: (a -> b -> a) -> a -> [b] -> a</div><div class="foldrLessonBaseCase">foldl f i [] = i</div><div class="foldrLessonRecursiveCase">foldl f i (x:xs) = f (foldl f i xs) x</div></pre>
+
+      <div class="foldrLessonTypeSignature" >
+        <span><code class="foldrInLesson">foldr</code> takes 2 inputs</span>
+          <ul style="padding-left: 30px;margin-top: 5px;">
+            <li>function of type <code>(a -> b)</code></li>
+            <li>list of type <code>[a]</code></li>
+          </ul>
+          <span>and returns</span>
+          <ul style="padding-left: 30px;margin-top: 5px;">
+            <li>list of type <code>[b]</code></li>
+          </ul>
+
+      </div>
+
+      <div class="foldrLessonPatternMatches" style="padding-top: 10px;">
+        <div class="foldrLessonBaseCase">
+          The base-case of <code class="foldrInLesson">foldr</code> pattern matches on <code>[]</code> and returns <code>[]</code>.
+        </div>
+       </br>
+        <div  class="foldrLessonRecursiveCase">
            The recursive-case pattern matches on the first list element (<code> x </code>) and returns <code>(f x) : map f xs</code>.
          </div>
       </div>
     </div>
-
-    <div id="lines"></div>
   </body>
   <script>
     var toggleLessonHighlight = function(e) {
       var blahs = document.getElementsByClassName(e.target.classList[0]);
       for (var i = 0; i < blahs.length; i ++){
         blah = blahs[i];
-        blah.classList.toggle("map-lesson-highlight");
+        blah.classList.toggle("lesson-highlight");
       };
     };
 
-    names = ['mapLessonRecursiveCase', 'mapLessonBaseCase', 'mapLessonTypeSignature']
+    names = ['mapLessonRecursiveCase', 'mapLessonBaseCase', 'mapLessonTypeSignature', 'foldrLessonTypeSignature', 'foldrLessonBaseCase','foldrLessonRecursiveCase', ]
     for (var j = 0; j < names.length; j++) {
       var name = names[j];
 
@@ -107,7 +146,7 @@
 
     React.renderComponent(
       HaskellJSProgram({defaultValue: 'map addOne [1 2 3 4 5]'}),
-      document.getElementById('lines')
+      document.getElementById('mapLines')
     );
 
     React.renderComponent(
