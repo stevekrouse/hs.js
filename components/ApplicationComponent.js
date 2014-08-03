@@ -25,9 +25,10 @@ var Application = React.createClass({displayName: 'Application',
   render: function() {
     var currentAST = this.currentAST();
 
-    var funcAndArgs = currentAST.arguments.map((function(arg){
-      return Node({lineState: this.props.lineState, id: arg.id, key: arg.id});
-    }).bind(this));
+    var funcAndArgs = _.flatten(currentAST.arguments.map((function(arg){
+      return [Node({lineState: this.props.lineState, id: arg.id, key: arg.id}), (currentAST.functionName.infix ? '' : ' ')];
+    }).bind(this)));
+    funcAndArgs.pop(); // remove last whitespace
 
     indexToAddFunction = currentAST.functionName.infix ? 1 : 0;
     funcAndArgs.splice(indexToAddFunction, 0, FunctionName({lineState: this.props.lineState, id: currentAST.functionName.id, key: currentAST.functionName.id}));
