@@ -30,7 +30,9 @@ pre {
 
 .lines {
   font-family: monospace;
-  padding-top: 1em;
+  padding: 1em;
+  box-shadow: 0 0 3px #777;
+  margin-top: 1em;
 }
 .line {
   width: 80%;
