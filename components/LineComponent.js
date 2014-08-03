@@ -51,7 +51,7 @@ var Line = React.createClass({displayName: 'Line',
   },
   render: function() {
     var className = "line";
-    var lineContext, lineEditButton;
+    var lineContext, lineEditButton, lineClearButton;
     if (this.props.lineState.highlightedLineIndex == this.props.lineState.index) {
       className += " line-highlight";
       lineContext = LineContext({lineState: this.props.lineState, key: 2});
@@ -61,7 +61,12 @@ var Line = React.createClass({displayName: 'Line',
         className: 'lines-edit',
         onClick: this.props.lineState.program.editFirstLine,
         key: 3
-      }, 'edit input');
+      }, '(edit)');
+      lineClearButton = React.DOM.span({
+        className: 'lines-edit',
+        onClick: this.props.lineState.program.clearProgram,
+        key: 4
+      }, '(clear)');
     }
 
     if (this.props.lineState.editing) {
@@ -84,7 +89,8 @@ var Line = React.createClass({displayName: 'Line',
           [
             Node({lineState: this.props.lineState, id: this.props.lineState.ast.id, key: 1}),
             lineContext,
-            lineEditButton
+            lineEditButton,
+            lineClearButton
           ]
         )
       );
