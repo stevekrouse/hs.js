@@ -12,6 +12,13 @@ var List = React.createClass({displayName: 'List',
       this.setState({editingError: true});
     }
   },
+  componentDidUpdate: function(){
+    if (this.getDOMNode().tagName === "INPUT"){
+      this.getDOMNode().focus();
+      var length = this.getDOMNode().value.length;
+      this.getDOMNode().setSelectionRange(length - 1, length - 1);
+    }
+  },
   onKeyDown: function(event) {
     if (event.keyCode === 13) {
       try {
