@@ -13,4 +13,9 @@ window.initialFunctionDefinitions = "map :: (a -> b) -> [a] -> [b]"            +
                                     "addOne x = x + 1"                         + "\n" +
                                     ""                                         + "\n" +
                                     "double :: Int -> Int"                     + "\n" +
-                                    "double x = x + x"                         + "\n";
+                                    "double x = x + x"                         + "\n" +
+                                    ""                                         + "\n" +
+                                    "take :: Int -> [a] -> [a]"                + "\n" +
+                                    "take 0 xs = []"                           + "\n" +
+                                    "take n [] = []"                           + "\n" +
+                                    "take n (x:xs) = (x : (take (n - 1) xs))"  + "\n";

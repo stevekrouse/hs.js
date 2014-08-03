@@ -46,6 +46,7 @@ pattern
   = "[" whitespace* "]" { return {id: randomId(), type: "emptyListPattern", doesMatch: function(arg) { return arg.type === "list" && arg.items.length === 0; } }; }
   / "(" left:functionName ":" right:functionName ")" { return {id: randomId(), type: "listPattern", left: left, right: right, doesMatch: function(arg) { return arg.type === "list" && arg.items.length > 0 } }; }
   / functionName
+  / integer:integer { integer.doesMatch = function(arg) { return arg.type === "int" && arg.value === integer.value; }; return integer; }
 
 expression
   = "(" whitespace? exp:expressionWithFunction whitespace? ")" { return exp; }

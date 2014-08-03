@@ -75,28 +75,29 @@ HaskellParser = (function() {
         peg$c24 = ")",
         peg$c25 = { type: "literal", value: ")", description: "\")\"" },
         peg$c26 = function(left, right) { return {id: randomId(), type: "listPattern", left: left, right: right, doesMatch: function(arg) { return arg.type === "list" && arg.items.length > 0 } }; },
-        peg$c27 = function(exp) { return exp; },
-        peg$c28 = function(f, args) {return {functionName: f, type: 'application', id: randomId(), arguments: args}},
-        peg$c29 = function(left, f, right) { return {id: randomId(), functionName: f, type: "application", arguments: [left, right]}},
-        peg$c30 = function(list) { return { id: randomId(), type: "list", items: list || [] }; },
-        peg$c31 = function(exp1, list) { list.unshift(exp1); return list; },
-        peg$c32 = /^[A-Za-z]/,
-        peg$c33 = { type: "class", value: "[A-Za-z]", description: "[A-Za-z]" },
-        peg$c34 = function(letters) { return {id: randomId(), type: 'functionName', name: letters.join(""), infix: false}; },
-        peg$c35 = "+",
-        peg$c36 = { type: "literal", value: "+", description: "\"+\"" },
-        peg$c37 = function() { return {id: randomId(), type: 'functionName', name: '+', infix: true}; },
-        peg$c38 = "-",
-        peg$c39 = { type: "literal", value: "-", description: "\"-\"" },
-        peg$c40 = function() { return {id: randomId(), type: 'functionName', name: '-', infix: true}; },
-        peg$c41 = function() { return {id: randomId(), type: 'functionName', name: ':', infix: true}; },
-        peg$c42 = /^[0-9]/,
-        peg$c43 = { type: "class", value: "[0-9]", description: "[0-9]" },
-        peg$c44 = function(digits) { return { id: randomId(), type: "int", value: parseInt(digits.join(""), 10)} ; },
-        peg$c45 = " ",
-        peg$c46 = { type: "literal", value: " ", description: "\" \"" },
-        peg$c47 = /^[ \n]/,
-        peg$c48 = { type: "class", value: "[ \\n]", description: "[ \\n]" },
+        peg$c27 = function(integer) { integer.doesMatch = function(arg) { return arg.type === "int" && arg.value === integer.value; }; return integer; },
+        peg$c28 = function(exp) { return exp; },
+        peg$c29 = function(f, args) {return {functionName: f, type: 'application', id: randomId(), arguments: args}},
+        peg$c30 = function(left, f, right) { return {id: randomId(), functionName: f, type: "application", arguments: [left, right]}},
+        peg$c31 = function(list) { return { id: randomId(), type: "list", items: list || [] }; },
+        peg$c32 = function(exp1, list) { list.unshift(exp1); return list; },
+        peg$c33 = /^[A-Za-z]/,
+        peg$c34 = { type: "class", value: "[A-Za-z]", description: "[A-Za-z]" },
+        peg$c35 = function(letters) { return {id: randomId(), type: 'functionName', name: letters.join(""), infix: false}; },
+        peg$c36 = "+",
+        peg$c37 = { type: "literal", value: "+", description: "\"+\"" },
+        peg$c38 = function() { return {id: randomId(), type: 'functionName', name: '+', infix: true}; },
+        peg$c39 = "-",
+        peg$c40 = { type: "literal", value: "-", description: "\"-\"" },
+        peg$c41 = function() { return {id: randomId(), type: 'functionName', name: '-', infix: true}; },
+        peg$c42 = function() { return {id: randomId(), type: 'functionName', name: ':', infix: true}; },
+        peg$c43 = /^[0-9]/,
+        peg$c44 = { type: "class", value: "[0-9]", description: "[0-9]" },
+        peg$c45 = function(digits) { return { id: randomId(), type: "int", value: parseInt(digits.join(""), 10)} ; },
+        peg$c46 = " ",
+        peg$c47 = { type: "literal", value: " ", description: "\" \"" },
+        peg$c48 = /^[ \n]/,
+        peg$c49 = { type: "class", value: "[ \\n]", description: "[ \\n]" },
 
         peg$currPos          = 0,
         peg$reportedPos      = 0,
@@ -612,6 +613,15 @@ HaskellParser = (function() {
         }
         if (s0 === peg$FAILED) {
           s0 = peg$parsefunctionName();
+          if (s0 === peg$FAILED) {
+            s0 = peg$currPos;
+            s1 = peg$parseinteger();
+            if (s1 !== peg$FAILED) {
+              peg$reportedPos = s0;
+              s1 = peg$c27(s1);
+            }
+            s0 = s1;
+          }
         }
       }
 
@@ -651,7 +661,7 @@ HaskellParser = (function() {
               }
               if (s5 !== peg$FAILED) {
                 peg$reportedPos = s0;
-                s1 = peg$c27(s3);
+                s1 = peg$c28(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -711,7 +721,7 @@ HaskellParser = (function() {
           s3 = peg$parseexpression_list();
           if (s3 !== peg$FAILED) {
             peg$reportedPos = s0;
-            s1 = peg$c28(s1, s3);
+            s1 = peg$c29(s1, s3);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -750,7 +760,7 @@ HaskellParser = (function() {
               s5 = peg$parseexpressionWithFunction();
               if (s5 !== peg$FAILED) {
                 peg$reportedPos = s0;
-                s1 = peg$c29(s1, s3, s5);
+                s1 = peg$c30(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -812,7 +822,7 @@ HaskellParser = (function() {
               }
               if (s5 !== peg$FAILED) {
                 peg$reportedPos = s0;
-                s1 = peg$c30(s3);
+                s1 = peg$c31(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -852,7 +862,7 @@ HaskellParser = (function() {
         }
         if (s2 !== peg$FAILED) {
           peg$reportedPos = s0;
-          s1 = peg$c31(s1, s2);
+          s1 = peg$c32(s1, s2);
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -875,7 +885,7 @@ HaskellParser = (function() {
         s2 = peg$parseexpression();
         if (s2 !== peg$FAILED) {
           peg$reportedPos = s0;
-          s1 = peg$c27(s2);
+          s1 = peg$c28(s2);
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -894,22 +904,22 @@ HaskellParser = (function() {
 
       s0 = peg$currPos;
       s1 = [];
-      if (peg$c32.test(input.charAt(peg$currPos))) {
+      if (peg$c33.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c33); }
+        if (peg$silentFails === 0) { peg$fail(peg$c34); }
       }
       if (s2 !== peg$FAILED) {
         while (s2 !== peg$FAILED) {
           s1.push(s2);
-          if (peg$c32.test(input.charAt(peg$currPos))) {
+          if (peg$c33.test(input.charAt(peg$currPos))) {
             s2 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c33); }
+            if (peg$silentFails === 0) { peg$fail(peg$c34); }
           }
         }
       } else {
@@ -917,7 +927,7 @@ HaskellParser = (function() {
       }
       if (s1 !== peg$FAILED) {
         peg$reportedPos = s0;
-        s1 = peg$c34(s1);
+        s1 = peg$c35(s1);
       }
       s0 = s1;
 
@@ -929,29 +939,29 @@ HaskellParser = (function() {
 
       s0 = peg$currPos;
       if (input.charCodeAt(peg$currPos) === 43) {
-        s1 = peg$c35;
+        s1 = peg$c36;
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c36); }
+        if (peg$silentFails === 0) { peg$fail(peg$c37); }
       }
       if (s1 !== peg$FAILED) {
         peg$reportedPos = s0;
-        s1 = peg$c37();
+        s1 = peg$c38();
       }
       s0 = s1;
       if (s0 === peg$FAILED) {
         s0 = peg$currPos;
         if (input.charCodeAt(peg$currPos) === 45) {
-          s1 = peg$c38;
+          s1 = peg$c39;
           peg$currPos++;
         } else {
           s1 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c39); }
+          if (peg$silentFails === 0) { peg$fail(peg$c40); }
         }
         if (s1 !== peg$FAILED) {
           peg$reportedPos = s0;
-          s1 = peg$c40();
+          s1 = peg$c41();
         }
         s0 = s1;
         if (s0 === peg$FAILED) {
@@ -965,7 +975,7 @@ HaskellParser = (function() {
           }
           if (s1 !== peg$FAILED) {
             peg$reportedPos = s0;
-            s1 = peg$c41();
+            s1 = peg$c42();
           }
           s0 = s1;
         }
@@ -979,22 +989,22 @@ HaskellParser = (function() {
 
       s0 = peg$currPos;
       s1 = [];
-      if (peg$c42.test(input.charAt(peg$currPos))) {
+      if (peg$c43.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c43); }
+        if (peg$silentFails === 0) { peg$fail(peg$c44); }
       }
       if (s2 !== peg$FAILED) {
         while (s2 !== peg$FAILED) {
           s1.push(s2);
-          if (peg$c42.test(input.charAt(peg$currPos))) {
+          if (peg$c43.test(input.charAt(peg$currPos))) {
             s2 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c43); }
+            if (peg$silentFails === 0) { peg$fail(peg$c44); }
           }
         }
       } else {
@@ -1002,7 +1012,7 @@ HaskellParser = (function() {
       }
       if (s1 !== peg$FAILED) {
         peg$reportedPos = s0;
-        s1 = peg$c44(s1);
+        s1 = peg$c45(s1);
       }
       s0 = s1;
 
@@ -1014,21 +1024,21 @@ HaskellParser = (function() {
 
       s0 = [];
       if (input.charCodeAt(peg$currPos) === 32) {
-        s1 = peg$c45;
+        s1 = peg$c46;
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c46); }
+        if (peg$silentFails === 0) { peg$fail(peg$c47); }
       }
       if (s1 !== peg$FAILED) {
         while (s1 !== peg$FAILED) {
           s0.push(s1);
           if (input.charCodeAt(peg$currPos) === 32) {
-            s1 = peg$c45;
+            s1 = peg$c46;
             peg$currPos++;
           } else {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c46); }
+            if (peg$silentFails === 0) { peg$fail(peg$c47); }
           }
         }
       } else {
@@ -1042,22 +1052,22 @@ HaskellParser = (function() {
       var s0, s1;
 
       s0 = [];
-      if (peg$c47.test(input.charAt(peg$currPos))) {
+      if (peg$c48.test(input.charAt(peg$currPos))) {
         s1 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c48); }
+        if (peg$silentFails === 0) { peg$fail(peg$c49); }
       }
       if (s1 !== peg$FAILED) {
         while (s1 !== peg$FAILED) {
           s0.push(s1);
-          if (peg$c47.test(input.charAt(peg$currPos))) {
+          if (peg$c48.test(input.charAt(peg$currPos))) {
             s1 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c48); }
+            if (peg$silentFails === 0) { peg$fail(peg$c49); }
           }
         }
       } else {
