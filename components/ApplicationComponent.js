@@ -1,7 +1,5 @@
 var Application = React.createClass({displayName: 'Application',
-  currentAST: function(){
-    return ASTTransformations.subtreeById(this.props.ast, this.props.id);
-  },
+  mixins: [NodeMixins],
   render: function() {
     var ast = this.props.ast;
     var funcAndArgs = this.currentAST().arguments.map(function(arg){
