@@ -1,4 +1,4 @@
-window.plus = {
+window.functions['+'] = {
   name: '+',
   infix: true,
   typeSignature: 'Int -> Int -> Int',

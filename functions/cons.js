@@ -1,4 +1,4 @@
-window.cons = {
+window.functions[':'] = {
   name: ':',
   infix: true,
   typeSignature: 'a -> [a] -> [a]',

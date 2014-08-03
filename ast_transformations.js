@@ -1,12 +1,8 @@
+window.functions = {};
+
 var _isValidApplication = function(functionName, arguments) {  // TODO REMOVE THIS METHOD
-  if (functionName === '+') {
-    return window.plus.isValidApplication(arguments);
-  } else if (functionName === 'map') {
-    return window.map.isValidApplication(arguments);
-  } else if (functionName === '(+ 1)') {
-    return window.plusOne.isValidApplication(arguments);
-  } else if (functionName === ':') {
-    return window.cons.isValidApplication(arguments);
+  if (window.functions[functionName] != undefined){
+    return window.functions[functionName].isValidApplication(arguments);
   } else {
     return false;
   }
@@ -20,25 +16,22 @@ var _patternMatch = function(func, arguments){
       return pattern.apply(arguments);
     }
   }
-
-  alert("Inexhaustive pattern matching for function '" + func.name + "'.");
+  throw "Inexhaustive pattern matching for function '" + func.name + "'.";
 };
 
 var _applyFunction = function(node) {
   if (node.type !== 'application') {
     throw 'node needs to be an application';
   }
+
   if (!_isValidApplication(node.functionName.name, node.arguments)) {
     throw 'invalid application';
   }
-  if (node.functionName.name === '+') {
-    return _patternMatch(window.plus, node.arguments);
-  } else if (node.functionName.name === '(+ 1)') {
-    return _patternMatch(window.plusOne, node.arguments);
-  } else if (node.functionName.name === 'map') {
-    return _patternMatch(window.map, node.arguments);
-  } else if (node.functionName.name === ':') {
-    return _patternMatch(window.cons, node.arguments);
+
+  if (window.functions[node.functionName.name] != undefined){
+    return _patternMatch(window.functions[node.functionName.name], node.arguments);
+  } else {
+    throw 'function not defined for application';
   }
 }
 
