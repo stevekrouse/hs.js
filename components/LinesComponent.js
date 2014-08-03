@@ -1,7 +1,7 @@
 var Lines = React.createClass({displayName: 'Lines',
   render: function() {
     return (
-      React.DOM.div({className: "lines"},
+      React.DOM.div({className: "lines"}, [
         React.addons.CSSTransitionGroup({transitionName: 'lines-animation'},
           this.props.lines.map((function(line, index) {
             return Line({lineState: {
@@ -15,8 +15,9 @@ var Lines = React.createClass({displayName: 'Lines',
               editing: this.props.editingFirstLine && index === 0
             }});
           }).bind(this))
-        )
-      )
+        ),
+        (this.props.showHelpText ? React.DOM.div({className: 'help-text'}, "\u2191 click to expand execution") : undefined)
+      ])
     );
   }
 });
