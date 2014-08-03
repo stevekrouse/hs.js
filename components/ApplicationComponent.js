@@ -2,6 +2,9 @@ var Application = React.createClass({displayName: 'Application',
   currentAST: function(){
     return ASTTransformations.subtreeById(this.props.ast, this.props.id);
   },
+  isApplicable: function() {
+    return ASTTransformations.isApplicable(this.currentAST());
+  },
   render: function() {
     var ast = this.props.ast;
     var funcAndArgs = this.currentAST().arguments.map(function(arg){
@@ -11,7 +14,11 @@ var Application = React.createClass({displayName: 'Application',
     funcAndArgs.unshift(FunctionName({ast: this.props.ast, id: this.currentAST().functionName.id}));
     funcAndArgs.unshift('(');
     funcAndArgs.push(')');
-    return React.DOM.div({className: "application"},
+
+    var className = 'application';
+    if (this.isApplicable()) className += ' application-applicable';
+
+    return React.DOM.div({className: className},
       funcAndArgs
     );
   }

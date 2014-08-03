@@ -7,3 +7,8 @@
 .lines {
   font-family: monospace;
 }
+
+.application-applicable:hover {
+  background: yellow;
+  cursor: pointer;
+}
