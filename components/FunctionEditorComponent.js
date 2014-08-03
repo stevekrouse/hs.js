@@ -7,7 +7,7 @@ var FunctionEditor = React.createClass({displayName: 'FunctionEditor',
   },
   onChange: function(e) {
     try {
-      window.updateFunctionDefinitions(e.target.value);
+      this.props.program.updateFunctionDefinitions(e.target.value);
       this.setState({error: false});
     } catch (e) {
       this.setState({error: true});
