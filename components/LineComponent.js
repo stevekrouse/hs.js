@@ -61,7 +61,7 @@ var Line = React.createClass({displayName: 'Line',
         className: 'lines-edit',
         onClick: this.props.lineState.program.editFirstLine,
         key: 3
-      }, 'edit input haskell (advanced)');
+      }, 'edit input');
     }
 
     if (this.props.lineState.editing) {
