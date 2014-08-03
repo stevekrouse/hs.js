@@ -151,7 +151,7 @@
              The base-case of <code class="foldlInLesson">foldl</code> pattern matches on <code>[]</code> and returns <code>[]</code>.
            </div>
            </br>
-           <div class="foldrLessonRecursiveCase">
+           <div class="foldlLessonRecursiveCase">
              The recursive-case pattern matches on the first list element <code> x </code> and returns <code>f i (<code class="foldlInLesson">foldl</code> f i xs)</code>.
            </div>
          </div>
@@ -169,7 +169,7 @@
       };
     };
 
-    names = ['mapLessonRecursiveCase', 'mapLessonBaseCase', 'mapLessonTypeSignature', 'foldrLessonTypeSignature', 'foldrLessonBaseCase','foldrLessonRecursiveCase', ]
+    names = ['mapLessonRecursiveCase', 'mapLessonBaseCase', 'mapLessonTypeSignature', 'foldrLessonTypeSignature', 'foldrLessonBaseCase','foldrLessonRecursiveCase', 'foldlLessonTypeSignature', 'foldlLessonBaseCase', 'foldlLessonRecursiveCase' ]
     for (var j = 0; j < names.length; j++) {
       var name = names[j];
 
@@ -187,12 +187,12 @@
     );
 
     React.renderComponent(
-      HaskellJSProgram({defaultValue: 'foldr plus 0 [1 2 3 4 5]'}),
+      HaskellJSProgram({defaultValue: 'foldr cons [] [1 2 3 4 5]'}),
       document.getElementById('foldrLines')
     );
 
     React.renderComponent(
-      HaskellJSProgram({defaultValue: 'foldl plus 0 [1 2 3 4 5]'}),
+      HaskellJSProgram({defaultValue: 'foldl reverseCons [] [1 2 3 4 5]'}),
       document.getElementById('foldlLines')
     );
 
