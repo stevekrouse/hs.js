@@ -16,6 +16,16 @@
 .line-highlight {
   background: #fee;
 }
+.line-inner {
+  position: relative;
+  max-width: 800px;
+}
+.line-context {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  color: #777;
+}
 
 .application-applicable:hover {
   background: #fcc;
