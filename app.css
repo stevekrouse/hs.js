@@ -22,6 +22,9 @@ body {
   max-width: 1000px;
   position: relative;
 }
+.line {
+  width: 80%;
+}
 
 .lines-edit {
   color: #777;
@@ -110,7 +113,7 @@ input.input-error {
   top: 20px;
   right: 0;
   height: 200px;
-  width: 300px;
+  width: 20%;
   font: 1em monospace;
   border: 1px solid #ccc;
   padding: 10px;
