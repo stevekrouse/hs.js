@@ -22,16 +22,22 @@ var FunctionEditor = React.createClass({displayName: 'FunctionEditor',
           onChange: this.onChange
         }),
         React.DOM.div({
-          className: "function-editor-link",
-          onClick: this.onClick
-        }, '(close)')
+          className: "function-editor-top",
+        }, [
+             React.DOM.span({className: "function-editor-title function-editor-title-big"}, 'Function Editor'),
+             // React.DOM.span({className: "function-editor-link", onClick: this.onClick}, '(close)')
+           ]
+        )
       ]);
     } else {
       return (
         React.DOM.div({
-          className: "function-editor-link",
-          onClick: this.onClick
-        }, '(edit functions)')
+          className: "function-editor-top",
+        }, [
+             React.DOM.span({className: "function-editor-title function-editor-title-big"}, 'Function Editor'),
+             // React.DOM.span({className: "function-editor-link", onClick: this.onClick}, '(open)')
+           ]
+        )
       );
     }
   },
