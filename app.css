@@ -2,6 +2,10 @@ body {
   font-family: 'Optima', 'Arial', 'Helvetica', 'sans-serif';
 }
 
+a {
+  color: gray;
+}
+
 pre {
   margin-left: 30px;
 }
@@ -42,12 +46,26 @@ pre {
 
 .lines {
   font-family: monospace;
-  padding: 1.4em;
-  box-shadow: 0 0 3px #777;
+  padding: 1em;
+  margin: 5em;
+  /*box-shadow: 0 0 1.5px #777;*/
   margin: 1em 0;
 
-  min-height: 300px;
+  min-height: 220px;
 }
+
+#mapLines .lines {
+  border: 1px solid rgb(253, 46, 46);
+}
+
+#foldrLines .lines {
+  border: 1px solid rgb(255, 100, 224);
+}
+
+#foldlLines .lines{
+  border: 1px solid green;
+}
+
 .line {
   width: 80%;
 }
@@ -135,22 +153,42 @@ input.input-error {
 .function-editor-link {
   color: #777;
   cursor: pointer;
-  text-decoration: underline;
+  font: 1em monospace;
+  padding-left: 10px;
+}
+
+.function-editor-title {
+  color:rgb(149, 105, 196);;
+  font-weight:bold;
+}
+
+.function-editor-title-big{
+  font-size: 1.3em;
+}
+
+.function-editor-top {
   position: fixed;
   top: 5px;
-  right: 10px;
-  font: 1em monospace;
+  left: 76.5%;
 }
+
 .function-editor {
+  box-shadow: 0 0 1.5px #777;
   position: fixed;
-  top: 25px;
+  top: 30px;
   right: 10px;
-  height: 300px;
-  width: 20%;
+  height: 95%;
+  width: 23%;
   font: 1em monospace;
   border: 1px solid #ccc;
   padding: 10px;
 }
+
+.function-editor:focus {
+ box-shadow: 0 0 4px #007AFF;
+ outline:none;
+}
+
 .function-editor-error {
   outline: 1px solid red;
 }
