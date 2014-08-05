@@ -17,6 +17,7 @@ var FunctionEditor = React.createClass({displayName: 'FunctionEditor',
     if (this.state.editing) {
       return React.DOM.div({}, [
         React.DOM.textarea({
+          spellCheck: 'false',
           className: "function-editor" + (this.state.error ? ' function-editor-error' : ''),
           value: this.state.functionDefinitions,
           onChange: this.onChange
