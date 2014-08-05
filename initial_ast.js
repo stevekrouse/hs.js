@@ -10,10 +10,10 @@ window.initialFunctionDefinitions = "map :: (a -> b) -> [a] -> [b]"            +
                                     "foldl f i []     = i"                     + "\n" +
                                     "foldl f i (x:xs) = foldl f (f i x) xs"    + "\n" +
                                     ""                                         + "\n" +
-                                    "cons :: Int -> [Int]"                     + "\n" +
+                                    "cons :: Int -> [Int] -> [Int]"            + "\n" +
                                     "cons x xs = x : xs"                       + "\n" +
                                     ""                                         + "\n" +
-                                    "reverseCons :: Int -> [Int]"              + "\n" +
+                                    "reverseCons :: [Int] -> Int -> [Int]"     + "\n" +
                                     "reverseCons xs x = x : xs"                + "\n" +
                                     ""                                         + "\n" +
                                     "plus :: Int -> Int -> Int"                + "\n" +
