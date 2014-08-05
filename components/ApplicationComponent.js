@@ -30,8 +30,14 @@ var Application = React.createClass({displayName: 'Application',
     }).bind(this)));
     funcAndArgs.pop(); // remove last whitespace
 
-    indexToAddFunction = currentAST.functionName.infix ? 1 : 0;
-    funcAndArgs.splice(indexToAddFunction, 0, FunctionName({lineState: this.props.lineState, id: currentAST.functionName.id, key: currentAST.functionName.id}));
+    if (currentAST.functionName.infix) {
+      funcAndArgs.splice(1, 0, FunctionName({lineState: this.props.lineState, id: currentAST.functionName.id, key: currentAST.functionName.id}));
+      funcAndArgs.splice(1, 0, ' ');
+      funcAndArgs.splice(3, 0, ' ');
+    } else {
+      funcAndArgs.unshift(' ');
+      funcAndArgs.unshift(FunctionName({lineState: this.props.lineState, id: currentAST.functionName.id, key: currentAST.functionName.id}));
+    }
 
     funcAndArgs.unshift('(');
     funcAndArgs.push(')');
