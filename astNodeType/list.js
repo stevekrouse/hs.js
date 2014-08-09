@@ -7,6 +7,6 @@ window.astNodeTypes['list'] = {
       return window.ASTTransformations.astToString(item);
     });
 
-    return '[' + items.join(" ") + ']';
+    return '[' + items.join(",") + ']';
   }
 };

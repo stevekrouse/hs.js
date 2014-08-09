@@ -207,17 +207,17 @@
     }
 
     React.renderComponent(
-      HaskellJSProgram({defaultValue: 'map addOne [1 2 3 4 5]'}),
+      HaskellJSProgram({defaultValue: 'map addOne [1,2,3,4,5]'}),
       document.getElementById('mapLines')
     );
 
     React.renderComponent(
-      HaskellJSProgram({defaultValue: 'foldr plus 0 [1 2 3 4 5]'}),
+      HaskellJSProgram({defaultValue: 'foldr plus 0 [1,2,3,4,5]'}),
       document.getElementById('foldrLines')
     );
 
     React.renderComponent(
-      HaskellJSProgram({defaultValue: 'foldl reverseCons [] [1 2 3 4 5]'}),
+      HaskellJSProgram({defaultValue: 'foldl reverseCons [] [1,2,3,4,5]'}),
       document.getElementById('foldlLines')
     );
 

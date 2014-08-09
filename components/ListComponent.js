@@ -44,10 +44,14 @@ var List = React.createClass({displayName: 'List',
         style: {width: Math.max(100, (this.state.textLength || this.listText().length)*8)}
       });
     } else {
-      items = this.currentAST().items.map((function(item){
-        return Node({lineState: this.props.lineState, id: item.id, key: item.id});
-      }).bind(this));
-      items.unshift('[');
+      var listItems = this.currentAST().items;
+      var items = [];
+      items.push('[');
+      for (var i=0; i<listItems.length; i++) {
+        var listItem = listItems[i];
+        items.push(Node({lineState: this.props.lineState, id: listItem.id, key: listItem.id}));
+        if (i<listItems.length-1) items.push(',');
+      }
       items.push(']');
       return React.DOM.span({className: "list"}, items);
     }

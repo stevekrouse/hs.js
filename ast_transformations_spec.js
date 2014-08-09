@@ -206,7 +206,7 @@ describe('ASTTransformations', function() {
       chai.expect(stripIds(ASTTransformations.applyFunction(ASTbefore, ASTbefore.id)).ast).to.deep.equal(ASTafter);
     });
 
-    it('computes "1 : [2]" => "[1 2]"', function() {
+    it('computes "1 : [2]" => "[1,2]"', function() {
       var ASTbefore = {
         id: 1,
         type: "application",
