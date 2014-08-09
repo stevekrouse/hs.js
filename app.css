@@ -127,6 +127,15 @@ pre {
   -moz-transform: none;
 }
 
+.line-editing-container {
+  position: relative;
+}
+.line-editing-error {
+  position: absolute;
+  top: 1.5em;
+  background: #fcc;
+}
+
 input {
   margin: 0;
   padding: 0;

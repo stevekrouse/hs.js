@@ -16,7 +16,7 @@ var Line = React.createClass({displayName: 'Line',
       HaskellParser.parse(event.target.value);
       this.setState({editingError: false});
     } catch (e) {
-      this.setState({editingError: true});
+      this.setState({editingError: e});
     }
   },
   componentDidUpdate: function(){
@@ -30,7 +30,7 @@ var Line = React.createClass({displayName: 'Line',
       this.props.lineState.program.updateInitialAST(this.props.lineState.ast.id, HaskellParser.parse(event.target.value));
       this.setState({editingError: false});
     } catch (e) {
-      this.setState({editingError: true});
+      this.setState({editingError: e});
     }
   },
   onKeyDown: function(event) {
@@ -69,16 +69,29 @@ var Line = React.createClass({displayName: 'Line',
       }, '(clear)');
     }
 
+    var errorDiv;
+    if (this.state.editingError) {
+      errorDiv = React.DOM.div({
+        className: 'line-editing-error',
+        style: {left: 8*this.state.editingError.offset},
+        key: 1
+      }, "\u2191 " + this.state.editingError.message);
+    }
+
     if (this.props.lineState.editing) {
-      return React.DOM.input({
-        defaultValue: this.listText(),
-        onBlur: this.saveText,
-        onClick: function(event){event.stopPropagation();},
-        onChange: this.onTextChange,
-        onKeyDown: this.onKeyDown,
-        className: (this.state.editingError ? 'input-error' : ''),
-        style: {width: Math.max(100, (this.state.textLength || this.listText().length)*10)}
-      });
+      return React.DOM.div({className: 'line-editing-container'}, [
+        React.DOM.input({
+          defaultValue: this.listText(),
+          onBlur: this.saveText,
+          onClick: function(event){event.stopPropagation();},
+          onChange: this.onTextChange,
+          onKeyDown: this.onKeyDown,
+          className: (this.state.editingError ? 'input-error' : ''),
+          style: {width: Math.max(100, (this.state.textLength || this.listText().length)*10)},
+          key: 0
+        }),
+        errorDiv
+      ]);
     } else {
       return React.DOM.div({
         className: className,
