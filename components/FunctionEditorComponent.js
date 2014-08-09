@@ -20,12 +20,14 @@ var FunctionEditor = React.createClass({displayName: 'FunctionEditor',
           spellCheck: 'false',
           className: "function-editor" + (this.state.error ? ' function-editor-error' : ''),
           value: this.state.functionDefinitions,
-          onChange: this.onChange
+          onChange: this.onChange,
+          key: 1
         }),
         React.DOM.div({
           className: "function-editor-top",
+          key: 2
         }, [
-             React.DOM.span({className: "function-editor-title function-editor-title-big"}, 'Function Editor'),
+             React.DOM.span({className: "function-editor-title function-editor-title-big", key: 1}, 'Function Editor'),
              // React.DOM.span({className: "function-editor-link", onClick: this.onClick}, '(close)')
            ]
         )
@@ -35,7 +37,7 @@ var FunctionEditor = React.createClass({displayName: 'FunctionEditor',
         React.DOM.div({
           className: "function-editor-top",
         }, [
-             React.DOM.span({className: "function-editor-title function-editor-title-big"}, 'Function Editor'),
+             React.DOM.span({className: "function-editor-title function-editor-title-big", key: 1}, 'Function Editor'),
              // React.DOM.span({className: "function-editor-link", onClick: this.onClick}, '(open)')
            ]
         )
