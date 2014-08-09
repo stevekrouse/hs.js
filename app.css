@@ -65,12 +65,8 @@ pre {
   font-size: 1em;
   color: #777;
   margin-left: 1em;
-  display: none;
   cursor: pointer;
   text-decoration: underline;
-}
-.line:hover .lines-edit {
-  display: inline;
 }
 
 .line.span {
