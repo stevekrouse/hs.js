@@ -188,6 +188,7 @@ input.input-error {
   font: 1em monospace;
   border: 1px solid #ccc;
   padding: 10px;
+  white-space: nowrap;
 }
 
 .function-editor:focus {
