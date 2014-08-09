@@ -35,7 +35,7 @@ var HaskellJSProgram = React.createClass({displayName: 'HaskellJSProgram',
 
   editFirstLine: function() {
     this.clearProgram();
-    this.setState({editingFirstLine: true})
+    this.setState({editingFirstLine: true});
   },
 
   clearProgram: function() {
