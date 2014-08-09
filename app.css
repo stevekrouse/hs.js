@@ -156,6 +156,14 @@ input.input-error {
   text-align: center;
 }
 
+.function-editor-container {
+  position: fixed;
+  width: 23%;
+  right: 10px;
+  top: 0;
+  bottom: 10px;
+}
+
 .function-editor-link {
   color: #777;
   cursor: pointer;
@@ -173,18 +181,18 @@ input.input-error {
 }
 
 .function-editor-top {
-  position: fixed;
+  position: absolute;
   top: 5px;
-  left: 76.5%;
+  left: 0;
 }
 
 .function-editor {
   box-shadow: 0 0 1.5px #777;
-  position: fixed;
+  position: absolute;
   top: 30px;
-  right: 10px;
-  height: 95%;
-  width: 23%;
+  left: 0;
+  width: 100%;
+  bottom: 0;
   font: 1em monospace;
   border: 1px solid #ccc;
   padding: 10px;
@@ -197,5 +205,16 @@ input.input-error {
 }
 
 .function-editor-error {
-  outline: 1px solid red;
+  outline: 1px solid red !important;
+}
+
+.function-editor-error-message {
+  position: absolute;
+  left: -5px;
+  margin-top: 40px;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  background: #fcc;
+  font: 1em monospace;
+  padding: 5px;
 }

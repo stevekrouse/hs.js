@@ -10,18 +10,32 @@ var FunctionEditor = React.createClass({displayName: 'FunctionEditor',
       this.updateFunctionDefinitions(e.target.value);
       this.setState({error: false});
     } catch (e) {
-      this.setState({error: true});
+      this.setState({error: e});
     }
   },
   render: function() {
     if (this.state.editing) {
-      return React.DOM.div({}, [
+      var errorDiv;
+      if (this.state.error) {
+        var textAreaScrollTop = this.refs.textarea ? this.refs.textarea.getDOMNode().scrollTop : 0;
+
+        errorDiv = React.DOM.div({
+          className: 'function-editor-error-message',
+          style: {top: 15*(this.state.error.line-1) - textAreaScrollTop},
+          key: 3
+        }, this.state.error.message);
+      }
+
+      return React.DOM.div({className: 'function-editor-container'}, [
         React.DOM.textarea({
           spellCheck: 'false',
           className: "function-editor" + (this.state.error ? ' function-editor-error' : ''),
           value: this.state.functionDefinitions,
           onChange: this.onChange,
-          key: 1
+          onKeyUp: this.onChange,
+          onScroll: function() { this.forceUpdate(); }.bind(this),
+          key: 1,
+          ref: 'textarea'
         }),
         React.DOM.div({
           className: "function-editor-top",
@@ -30,7 +44,8 @@ var FunctionEditor = React.createClass({displayName: 'FunctionEditor',
              React.DOM.span({className: "function-editor-title function-editor-title-big", key: 1}, 'Function Editor'),
              // React.DOM.span({className: "function-editor-link", onClick: this.onClick}, '(close)')
            ]
-        )
+        ),
+        errorDiv
       ]);
     } else {
       return (
