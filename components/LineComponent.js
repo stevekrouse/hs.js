@@ -95,6 +95,7 @@ var Line = React.createClass({displayName: 'Line',
     } else {
       return React.DOM.div({
         className: className,
+        onTouchStart: this.highlight,
         onMouseEnter: this.highlight,
         onMouseLeave: this.unhighlight
       },

@@ -53,6 +53,7 @@ var Application = React.createClass({displayName: 'Application',
     return React.DOM.span({
       className: className,
       onClick: this.apply,
+      onTouchStart: this.apply,
       onMouseEnter: this.highlight,
       onMouseMove: this.highlight,
       onMouseLeave: this.unhighlight,
